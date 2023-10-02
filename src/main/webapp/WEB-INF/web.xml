@@ -17,6 +17,24 @@
         <url-pattern>/registerPage</url-pattern>
     </servlet-mapping>
 
+<!--    <servlet>-->
+<!--        <servlet-name>adminPage</servlet-name>-->
+<!--        <jsp-file>/WEB-INF/admin.jsp</jsp-file>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>adminPage</servlet-name>-->
+<!--        <url-pattern>/adminPage</url-pattern>-->
+<!--    </servlet-mapping>-->
+
+
+    <servlet>
+        <servlet-name>error403</servlet-name>
+        <jsp-file>/WEB-INF/error_403.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>error403</servlet-name>
+        <url-pattern>/error_403</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>dashboard</servlet-name>
@@ -28,16 +46,19 @@
     </servlet-mapping>
 
 
-    <!--    <error-page>-->
-<!--        <location></location>-->
-<!--    </error-page>-->
+    <error-page>
+        <location>/WEB-INF/error_404.jsp</location>
+        <error-code>404</error-code>
+    </error-page>
 
 
 <!--    <filter>-->
-<!--        <filter-name>AuthFilter</filter-name>-->
-<!--        <filter-class></filter-class>-->
+<!--        <filter-name>CollectDataFilter</filter-name>-->
+<!--        <filter-class>com.epam.library.filter.CollectDataFilter</filter-class>-->
 <!--    </filter>-->
 <!--    <filter-mapping>-->
-
+<!--        <filter-name>CollectDataFilter</filter-name>-->
+<!--        <url-pattern>/admin</url-pattern>-->
+<!--        <url-pattern>/adminPage</url-pattern>-->
 <!--    </filter-mapping>-->
 </web-app>

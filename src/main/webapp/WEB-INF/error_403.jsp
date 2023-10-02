@@ -5,16 +5,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Registration or Sign Up form in HTML CSS | CodingLab </title>
+    <title> ERROR 403 Forbidden </title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="wrapper">
-    <h2>Welcome</h2>
-    <%=((User)session.getAttribute("user")).getName()%>
+    <h2>ERROR 403 Forbidden</h2>
+    <a href="/">Login</a>
 </div>
 
-<%--List of all your book--%>
+<%--Select -> list of users--%>
+<%--Select ->  list of books--%>
+
+<%--button assign--%>
 
 
 </body>

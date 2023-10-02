@@ -5,16 +5,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Registration or Sign Up form in HTML CSS | CodingLab </title>
+    <title> ERROR 404 PAGE NOT FOUND </title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 <div class="wrapper">
-    <h2>Welcome</h2>
-    <%=((User)session.getAttribute("user")).getName()%>
+    <h2>PAGE NOT FOUND 404</h2>
+    <a href="/">Login</a>
 </div>
 
-<%--List of all your book--%>
+<%--Select -> list of users--%>
+<%--Select ->  list of books--%>
+
+<%--button assign--%>
 
 
 </body>
