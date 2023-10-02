@@ -22,7 +22,7 @@ public class BookManager implements Manager<Integer, Book>{
     }
 
     @Override
-    public void update(Integer entity) {
+    public void update(Book entity) {
 
     }
 

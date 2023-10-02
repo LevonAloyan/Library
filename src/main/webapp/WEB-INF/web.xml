@@ -27,6 +27,15 @@
         <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>admin</servlet-name>
+        <servlet-class>com.epam.servlets.AdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>admin</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+
 
     <!--    <error-page>-->
 <!--        <location></location>-->
