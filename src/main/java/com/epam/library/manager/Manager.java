@@ -10,7 +10,8 @@ public interface Manager<I, E> {
 
     void save(E entity);
 
-    void update(I entity);
+    void update(E entity);
 
     void delete(I id);
+
 }

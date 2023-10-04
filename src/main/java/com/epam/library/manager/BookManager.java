@@ -1,33 +1,18 @@
 package com.epam.library.manager;
 
-import com.epam.library.model.Book;
-
 import java.util.List;
 
-public class BookManager implements Manager<Integer, Book>{
+public interface BookManager<I, E> extends Manager<I, E> {
 
-    @Override
-    public Book getById(Integer id) {
-        return null;
-    }
 
-    @Override
-    public List<Book> getAll() {
-        return null;
-    }
+    List<E> getUserAllBooks(I id);
 
-    @Override
-    public void save(Book entity) {
+    List<E> getAllUnassignedBooks();
+    List<E> getAllAssignedBooks();
 
-    }
+     void delete(I id1, I id2);
 
-    @Override
-    public void update(Integer entity) {
+    void unAssign(E book);
 
-    }
-
-    @Override
-    public void delete(Integer id) {
-
-    }
+    E getByUserId(I id);
 }

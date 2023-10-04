@@ -18,9 +18,19 @@
     </servlet-mapping>
 
 
+<!--    <servlet>-->
+<!--        <servlet-name>edit</servlet-name>-->
+<!--        <jsp-file>/WEB-INF/editUser.jsp</jsp-file>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>edit</servlet-name>-->
+<!--        <url-pattern>/edit</url-pattern>-->
+<!--    </servlet-mapping>-->
+
+
     <servlet>
         <servlet-name>dashboard</servlet-name>
-        <jsp-file>/WEB-INF/userdashboard.jsp</jsp-file>
+        <jsp-file>/WEB-INF/userDashboard.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>dashboard</servlet-name>
@@ -28,16 +38,30 @@
     </servlet-mapping>
 
 
+    <servlet>
+        <servlet-name>error403</servlet-name>
+        <jsp-file>/WEB-INF/error_403.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>error403</servlet-name>
+        <url-pattern>/error_403</url-pattern>
+    </servlet-mapping>
+
+
     <!--    <error-page>-->
-<!--        <location></location>-->
-<!--    </error-page>-->
+    <!--        <location>/WEB-INF/error_404.jsp</location>-->
+    <!--        <error-code>404</error-code>-->
+    <!--    </error-page>-->
+    <!--    <error-page>-->
+    <!--        <location></location>-->
+    <!--    </error-page>-->
 
 
-<!--    <filter>-->
-<!--        <filter-name>AuthFilter</filter-name>-->
-<!--        <filter-class></filter-class>-->
-<!--    </filter>-->
-<!--    <filter-mapping>-->
+    <!--    <filter>-->
+    <!--        <filter-name>AuthFilter</filter-name>-->
+    <!--        <filter-class></filter-class>-->
+    <!--    </filter>-->
+    <!--    <filter-mapping>-->
 
-<!--    </filter-mapping>-->
+    <!--    </filter-mapping>-->
 </web-app>

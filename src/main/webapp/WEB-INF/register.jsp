@@ -17,18 +17,33 @@
         <div class="input-box">
             <input name="lastName" type="text" placeholder="Enter your last name" required>
         </div>
+        <%
+            if (request.getAttribute("usernameExistsErr") != null) {
+        %>
+        <span style="color: red"><%=request.getAttribute("usernameExistsErr")%></span>
+        <%}%>
+        <%
+            if (request.getAttribute("emailFormatErr") != null) {
+        %>
+        <span style="color: red"><%=request.getAttribute("emailFormatErr")%></span>
+        <%}%>
         <div class="input-box">
             <input name="email" type="text" placeholder="Enter your email" required>
+        </div>
+        <%
+            if (request.getAttribute("passwordErrMsg") != null) {
+        %>
+        <span style="color: red"><%=request.getAttribute("passwordErrMsg")%></span>
+        <%}%>
+
+        <div class="input-box">
+            <input name="password" type="password" placeholder="Create password" required>
         </div>
         <%
             if (request.getAttribute("passwordMatchError") != null) {
         %>
         <span style="color: red"><%=request.getAttribute("passwordMatchError")%></span>
         <%}%>
-
-        <div class="input-box">
-            <input name="password" type="password" placeholder="Create password" required>
-        </div>
         <div class="input-box">
             <input name="confirmPassword" type="password" placeholder="Confirm password" required>
         </div>

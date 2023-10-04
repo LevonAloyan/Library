@@ -1,7 +1,7 @@
 package com.epam.library.servlets;
 
 import com.epam.library.manager.UserManager;
-import com.epam.library.manager.UserManagerImpl;
+import com.epam.library.manager.impl.UserManagerImpl;
 import com.epam.library.model.User;
 
 import javax.servlet.ServletException;
@@ -28,7 +28,7 @@ public class LoginServlet extends HttpServlet {
         User user = userManager.getByEmailAndPassword(email, password);
         if (user != null){
             req.getSession().setAttribute("user", user);
-            req.getRequestDispatcher("/dashboard").forward(req,resp);
+            resp.sendRedirect("/my-account");
         }else {
             req.setAttribute("loginError","The email and password you entered is not correct.");
             req.getRequestDispatcher("/").forward(req, resp);
