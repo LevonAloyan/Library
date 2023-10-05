@@ -45,6 +45,34 @@
         <url-pattern>/dashboard</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>users</servlet-name>
+        <jsp-file>/WEB-INF/users.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>users</servlet-name>
+        <url-pattern>/users</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>books</servlet-name>
+        <jsp-file>/WEB-INF/books.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>books</servlet-name>
+        <url-pattern>/books</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>assignedBooks</servlet-name>
+        <jsp-file>/WEB-INF/assignedBooks.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>assignedBooks</servlet-name>
+        <url-pattern>/assignedBooks</url-pattern>
+    </servlet-mapping>
+
+
 
     <error-page>
         <location>/WEB-INF/error_404.jsp</location>
