@@ -30,7 +30,7 @@ public class AddBookServlet extends HttpServlet {
 
         bookManager.save(book);
 
-        req.setAttribute("bookAddingMsg"," Book has been added to the library..");
+        req.setAttribute("bookAddingMsg", " Book has been added to the library..");
         resp.sendRedirect("/my-account/admin");
 
     }

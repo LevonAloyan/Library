@@ -2,18 +2,18 @@ package com.epam.library.manager.impl;
 
 import com.epam.library.db.DBConnectionProvider;
 import com.epam.library.manager.BookManager;
-import com.epam.library.manager.UserManager;
 import com.epam.library.model.Book;
-import com.epam.library.model.User;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class BookManagerImpl implements BookManager<Integer, Book> {
     private Connection connection = DBConnectionProvider.getInstance().getConnection();
-    private UserManager userManager = new UserManagerImpl();
 
 
     @Override
@@ -124,13 +124,7 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Book book = new Book();
-                book.setId(resultSet.getInt("id"));
-                book.setBookName(resultSet.getString("book_name"));
-                book.setAuthorName(resultSet.getString("author_name"));
-                book.setUserId(resultSet.getInt("user_id"));
-
-                books.add(book);
+                books.add(getBooksFromResulSet(resultSet));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -153,11 +147,10 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public void unAssign(Book book) {
-        String sql = "delete from book where id = ? AND user_id = ?";
+        String sql = "UPDATE book SET user_id = NULL WHERE id = ?";
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, book.getId());
-            statement.setInt(2, book.getUserId());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

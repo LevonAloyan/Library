@@ -16,18 +16,17 @@ public class AssignBookServlet extends GenericServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> users = userManager.getAll();
+        req.getSession().setAttribute("users", users);
 
         List<Book> unassignedBooks = bookManager.getAllUnassignedBooks();
-        req.setAttribute("users", users);
-        req.setAttribute("unassignedBooks", unassignedBooks);
+        req.getSession().setAttribute("unassignedBooks", unassignedBooks);
         req.getRequestDispatcher("/WEB-INF/assign.jsp").forward(req, resp);
     }
 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-            Integer selectedUser = Integer.valueOf(req.getParameter("selectedUser"));
+        Integer selectedUser = Integer.valueOf(req.getParameter("selectedUser"));
             Integer selectedBook = Integer.valueOf(req.getParameter("selectedBook"));
 
             User user = userManager.getById(selectedUser);
@@ -37,7 +36,7 @@ public class AssignBookServlet extends GenericServlet {
                     book.setUserId(selectedUser);
                     bookManager.update(book);
                     req.setAttribute("successAssign","Successfully assigned!");
-                    req.getRequestDispatcher("/my-account/admin").forward(req, resp);
+                    req.getRequestDispatcher("/WEB-INF/assign.jsp").forward(req, resp);
                 }
             }
 

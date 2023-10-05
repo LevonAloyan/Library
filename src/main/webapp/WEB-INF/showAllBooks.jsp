@@ -14,8 +14,7 @@
     <title>View all books</title>
     <% List<Book> books = (List<Book>) request.getAttribute("books");
     %>
-    <%--    <% List<User> users = (List<User>) request.getAttribute("users");%>--%>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 <div class="wrapper">

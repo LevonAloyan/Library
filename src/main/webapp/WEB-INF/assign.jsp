@@ -14,8 +14,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assign book to user</title>
     <%
-        List<User> users = (List<User>) request.getAttribute("users");
-        List<Book> unassignedBooks = (List<Book>) request.getAttribute("unassignedBooks");
+        List<User> users = (List<User>) session.getAttribute("users");
+        List<Book> unassignedBooks = (List<Book>) session.getAttribute("unassignedBooks");
     %>
         <link rel="stylesheet" href="css/style.css">
     <h2>Admin</h2>
@@ -65,8 +65,6 @@
         <li><a href="/users">Show all users</a>
         </li>
         <li><a href="/books">Show all books</a>
-        </li>
-        <li><a href="/">Show assigned books</a>
         </li>
     </ul>
 </div>
