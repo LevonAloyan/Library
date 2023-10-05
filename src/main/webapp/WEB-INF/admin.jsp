@@ -59,11 +59,11 @@
     <ul>
         <li><a href="/">Login Page</a>
         </li>
-        <li><a href="/">Show all users</a>
+        <li><a href="/users">Show all users</a>
         </li>
-        <li><a href="/">Show all books</a>
+        <li><a href="/books">Show all books</a>
         </li>
-        <li><a href="/">Show assigned books</a>
+        <li><a href="/assignedBooks">Show assigned books</a>
         </li>
     </ul>
 </div>
