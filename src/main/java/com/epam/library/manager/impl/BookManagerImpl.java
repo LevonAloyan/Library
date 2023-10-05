@@ -19,7 +19,7 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
     public Book getById(Integer id) {
         connection = DBConnectionProvider.getInstance().getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM book where id=?");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM books where id=?");
             preparedStatement.setInt(1, id);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -43,7 +43,7 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
         connection = DBConnectionProvider.getInstance().getConnection();
         List<Book> books = new ArrayList<>();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM book");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM books");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -66,7 +66,7 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
     public void save(Book book) {
         connection = DBConnectionProvider.getInstance().getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO book(book_name, author_name, user_id) VALUES(?,?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO books(book_name, author_name, user_id) VALUES(?,?,?)");
             preparedStatement.setString(1, book.getBookName());
             preparedStatement.setString(2, book.getAuthorName());
             preparedStatement.setInt(3, book.getUserId());
@@ -83,7 +83,7 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
             connection = DBConnectionProvider.getInstance().getConnection();
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(
-                        "UPDATE book SET book_name=?, author_name=?, user_id=? WHERE id=?"
+                        "UPDATE books SET book_name=?, author_name=?, user_id=? WHERE id=?"
                 );
                 preparedStatement.setString(1, book.getBookName());
                 preparedStatement.setString(2, book.getAuthorName());
@@ -106,7 +106,30 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
         connection = DBConnectionProvider.getInstance().getConnection();
         List<Book> books = new ArrayList<>();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM book where user_id is null");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM books where user_id is null");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Book book = new Book();
+                book.setId(resultSet.getInt("id"));
+                book.setBookName(resultSet.getString("book_name"));
+                book.setAuthorName(resultSet.getString("author_name"));
+                book.setUserId(resultSet.getInt("user_id"));
+
+                books.add(book);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return books;
+    }
+
+    @Override
+    public List<Book> getAllAssignedBook() {
+        connection = DBConnectionProvider.getInstance().getConnection();
+        List<Book> books = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM books where user_id is not null");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
