@@ -5,7 +5,6 @@ import com.epam.library.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -15,8 +14,8 @@ public class AssignServlet extends GenericServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Integer selectedUser = Integer.valueOf(req.getParameter("selectedUser"));
-        Integer selectedBook = Integer.valueOf(req.getParameter("selectedBook"));
+        int selectedUser = Integer.parseInt(req.getParameter("selectedUser"));
+        int selectedBook = Integer.parseInt(req.getParameter("selectedBook"));
 
         User user = userManager.getById(selectedUser);
         if (user != null) {
@@ -24,7 +23,7 @@ public class AssignServlet extends GenericServlet {
             if (book != null && book.getUserId() == 0) {
                 book.setUserId(selectedUser);
                 bookManager.update(book);
-                req.setAttribute("successAssign","Successfully assigned!");
+                req.setAttribute("successAssign", "Successfully assigned!");
                 req.getRequestDispatcher("/admin").forward(req, resp);
             }
         }

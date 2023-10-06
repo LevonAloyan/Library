@@ -98,11 +98,18 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public void delete(Integer id) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM books WHERE id = ?");
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
-    public List<Book> getAllUnassignedBook() {
+    public List<Book> getAllUnassignedBook(int id) {
         connection = DBConnectionProvider.getInstance().getConnection();
         List<Book> books = new ArrayList<>();
         try {
