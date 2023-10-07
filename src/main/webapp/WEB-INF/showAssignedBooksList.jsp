@@ -11,7 +11,8 @@
 </head>
 <body>
 <%
-    List<Book> assignedBookList = (List<Book>) session.getAttribute("assignedBooks");
+    List<Book> assignedBookList = (List<Book>) request.getAttribute("assignedBooks");
+
 
 %>
 <div class="wrapper">
@@ -23,7 +24,7 @@
         %>
         <option name="selectedBook" id="selectbook"
                 value="<%=assaignedBook.getId()%>"><%=assaignedBook.getBookName()%> <%=assaignedBook.getAuthorName()%>
-                <a href="/unassignBook?bookId=<%=assaignedBook.getId()%>">Unassign</a>
+            <a href="/unassignBook?bookId=<%=assaignedBook.getId()%>">Unassign</a>
 
         </option>
 
