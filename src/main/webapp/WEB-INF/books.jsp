@@ -21,8 +21,8 @@
             <% for (Book book : bookList) {
             %>
             <option value="<%=book.getId()%>"><%=book.getBookName()%> <%=book.getAuthorName()%>
-                <button class="edit-button">Edit</button>
-                <button class="delete-button">Delete</button>
+                <a href="/editBook?bookId=<%=book.getId()%>">Edit</a>
+                <a href="/deleteBook?bookId=<%=book.getId()%>">Delete</a>
             </option>
             <%}%>
         </div>
