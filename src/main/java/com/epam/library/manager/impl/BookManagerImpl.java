@@ -98,7 +98,27 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public void delete(Integer id) {
+        connection = DBConnectionProvider.getInstance().getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM books where id=?;");
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void unassign(Book book) {
+        connection = DBConnectionProvider.getInstance().getConnection();
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE books SET user_id = NULL WHERE id = ?;");
+            statement.setInt(1, book.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
