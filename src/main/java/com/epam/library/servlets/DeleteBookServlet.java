@@ -1,7 +1,6 @@
 package com.epam.library.servlets;
 
 import com.epam.library.model.Book;
-import com.epam.library.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
