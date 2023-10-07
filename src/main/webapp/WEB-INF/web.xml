@@ -17,6 +17,16 @@
         <url-pattern>/registerPage</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>userEdit</servlet-name>
+        <jsp-file>/WEB-INF/userEdit.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userEdit</servlet-name>
+        <url-pattern>/userEdit</url-pattern>
+    </servlet-mapping>
+
 <!--    <servlet>-->
 <!--        <servlet-name>adminPage</servlet-name>-->
 <!--        <jsp-file>/WEB-INF/admin.jsp</jsp-file>-->
