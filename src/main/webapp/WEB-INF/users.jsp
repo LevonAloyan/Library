@@ -21,8 +21,8 @@
             <% for (User user : userList) {
             %>
             <option value="<%=user.getId()%>"><%=user.getName()%> <%=user.getLastName()%>
-                <button class="edit-button">Edit</button>
-                <button class="delete-button">Delete</button>
+                <a href="/editUser?userId=<%=user.getId()%>">Edit</a>
+                <a href="/deleteUser?userId=<%=user.getId()%>">Delete</a>
             </option>
             <%}%>
         </div>
