@@ -84,13 +84,34 @@ public class UserManagerImpl implements UserManager<Integer, User> {
     }
 
     @Override
-    public void update(User entity) {
-
+    public void update(User user) {
+        connection = DBConnectionProvider.getInstance().getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "UPDATE user SET name=?, last_name=?, email=?, password=?, user_role=? WHERE id=?"
+            );
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getLastName());
+            preparedStatement.setString(3, user.getEmail());
+            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setObject(5, user.getUserRole());
+            preparedStatement.setInt(6, user.getId());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void delete(Integer id) {
-
+        connection = DBConnectionProvider.getInstance().getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM user WHERE id = ?");
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -116,4 +137,6 @@ public class UserManagerImpl implements UserManager<Integer, User> {
         }
         return null;
     }
+
+
 }

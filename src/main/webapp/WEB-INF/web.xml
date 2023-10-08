@@ -48,7 +48,7 @@
 
     <error-page>
         <location>/WEB-INF/error_404.jsp</location>
-        <error-code>404</error-code>
+
     </error-page>
 
 

@@ -13,11 +13,11 @@ import java.util.List;
 
 public class BookManagerImpl implements BookManager<Integer, Book> {
 
-    private Connection connection;
+    private Connection connection=DBConnectionProvider.getInstance().getConnection();
 
     @Override
     public Book getById(Integer id) {
-        connection = DBConnectionProvider.getInstance().getConnection();
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM book where id=?");
             preparedStatement.setInt(1, id);
@@ -40,7 +40,7 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public List<Book> getAll() {
-        connection = DBConnectionProvider.getInstance().getConnection();
+
         List<Book> books = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM book");
@@ -64,7 +64,7 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public void save(Book book) {
-        connection = DBConnectionProvider.getInstance().getConnection();
+
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO book(book_name, author_name, user_id) VALUES(?,?,?)");
             preparedStatement.setString(1, book.getBookName());
@@ -80,7 +80,7 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
     @Override
     public void update(Book book) {
         if (book != null) {
-            connection = DBConnectionProvider.getInstance().getConnection();
+
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(
                         "UPDATE book SET book_name=?, author_name=?, user_id=? WHERE id=?"
@@ -98,12 +98,19 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public void delete(Integer id) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM books WHERE id = ?");
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
-    public List<Book> getAllUnassignedBook() {
-        connection = DBConnectionProvider.getInstance().getConnection();
+    public List<Book> getAllUnassignedBooks() {
+
         List<Book> books = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM book where user_id is null");
@@ -122,5 +129,26 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
             e.printStackTrace();
         }
         return books;
+    }
+
+    @Override
+    public List<Book> getAllAssignedBooks() {
+        List<Book>books = new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM book where user_id is NOT NULL");
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                Book book = new Book();
+                book.setId(resultSet.getInt("id"));
+                book.setBookName(resultSet.getString("book_name"));
+                book.setAuthorName(resultSet.getString("author_name"));
+                book.setUserId(resultSet.getInt("user_id"));
+                books.add(book);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }return books;
+
     }
 }
