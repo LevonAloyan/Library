@@ -18,7 +18,7 @@ public class AdminServlet extends GenericServlet {
         List<User> users = userManager.getAll();
         req.getSession().setAttribute("users", users);
 
-        List<Book> unassignedBooks = bookManager.getAllUnassignedBook(user.getId());
+        List<Book> unassignedBooks = bookManager.getAllUnassignedBooks();
         req.getSession().setAttribute("unassignedBooks", unassignedBooks);
 
         req.getRequestDispatcher("/WEB-INF/admin.jsp").forward(req, resp);
@@ -30,7 +30,7 @@ public class AdminServlet extends GenericServlet {
         List<User> users = userManager.getAll();
         req.getSession().setAttribute("users", users);
 
-        List<Book> unassignedBooks = bookManager.getAllUnassignedBook(user.getId());
+        List<Book> unassignedBooks = bookManager.getAllUnassignedBooks();
         req.getSession().setAttribute("unassignedBooks", unassignedBooks);
         req.getRequestDispatcher("/WEB-INF/admin.jsp").forward(req, resp);
     }

@@ -85,6 +85,7 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public void update(User user) {
+        connection = DBConnectionProvider.getInstance().getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(
                     "UPDATE user SET name=?, last_name=?, email=?, password=?, user_role=? WHERE id=?"
@@ -103,6 +104,7 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public void delete(Integer id) {
+        connection = DBConnectionProvider.getInstance().getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM user WHERE id = ?");
             preparedStatement.setInt(1, id);
@@ -135,4 +137,6 @@ public class UserManagerImpl implements UserManager<Integer, User> {
         }
         return null;
     }
+
+
 }

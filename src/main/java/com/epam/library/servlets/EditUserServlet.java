@@ -1,24 +1,16 @@
 package com.epam.library.servlets;
 
-import com.epam.library.manager.UserManager;
-import com.epam.library.manager.impl.UserManagerImpl;
 import com.epam.library.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
 @WebServlet("/editUser")
-public class EditUserServlet extends HttpServlet {
-    private UserManager<Integer, User> userManager;
-
-    public EditUserServlet() {
-        userManager = new UserManagerImpl();
-    }
+public class EditUserServlet extends GenericServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

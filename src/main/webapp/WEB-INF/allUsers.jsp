@@ -17,15 +17,12 @@
     <h2>All Users</h2>
     <br>
     <table>
-
         <tbody>
         <% for (User user : userList) {
         %>
         <tr>
-            <td><%=user.getName()%>
-            </td>
-            <td><%=user.getLastName()%>
-            </td>
+            <td><%=user.getName()%></td>
+            <td><%=user.getLastName()%></td>
             <td><a href="/editUser?id=<%= user.getId() %>">Edit</a></td>
             <td><a href="/deleteUser?id=<%= user.getId() %>">Delete</a></td>
             <% } %>

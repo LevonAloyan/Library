@@ -26,6 +26,8 @@
             </td>
             <td><a href="/editBook?id=<%= book.getBookName() %>">Edit</a></td>
             <td><a href="/deleteBook?id=<%= book.getBookName() %>">Delete</a></td>
+
+
             <% } %>
         </tr>
         </tbody>

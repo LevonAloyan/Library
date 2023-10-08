@@ -1,37 +1,28 @@
 package com.epam.library.servlets;
 
-import com.epam.library.manager.UserManager;
-import com.epam.library.manager.impl.UserManagerImpl;
 import com.epam.library.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/deleteUser")
-public class DeleteUserServlet extends HttpServlet {
-    private UserManager<Integer, User> userManager;
-
-    public DeleteUserServlet() {
-        userManager = new UserManagerImpl();
-    }
+public class DeleteUserServlet extends GenericServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userIdStr = req.getParameter("id");
 
-        if (userIdStr != null) {
+        if( userIdStr != null) {
             try {
                 int userId = Integer.parseInt(userIdStr);
+                User userToDelete = userManager.getById(userId);
+                if (userToDelete != null) {
+                    userManager.delete(userId);
 
-                User user = userManager.getById(userId);
-                if (user != null) {
-                    req.setAttribute("user", user);
-
-                    req.getRequestDispatcher("/deleteUser.jsp").forward(req, resp);
+                    resp.sendRedirect("/deleteUser.jsp");
                 } else {
                     resp.sendRedirect("/error_404.jsp");
                 }
@@ -44,18 +35,6 @@ public class DeleteUserServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userIdStr = req.getParameter("id");
-
-        if (userIdStr != null) {
-            try {
-                int userId = Integer.parseInt(userIdStr);
-
-                userManager.delete(userId);
-                resp.sendRedirect("/deleteUser.jsp");
-
-            } catch (NumberFormatException e) {
-                resp.sendRedirect("/error_404.jsp");
-            }
-        }
+       doGet(req, resp);
     }
 }

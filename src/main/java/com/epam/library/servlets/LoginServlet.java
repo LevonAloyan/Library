@@ -1,7 +1,5 @@
 package com.epam.library.servlets;
 
-import com.epam.library.manager.UserManager;
-import com.epam.library.manager.impl.UserManagerImpl;
 import com.epam.library.model.User;
 
 import javax.servlet.ServletException;
@@ -16,11 +14,6 @@ import static com.epam.library.model.UserRole.USER;
 @WebServlet("/login")
 public class LoginServlet extends GenericServlet {
 
-    private UserManager<Integer, User> userManager;
-
-    public LoginServlet() {
-        userManager = new UserManagerImpl();
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

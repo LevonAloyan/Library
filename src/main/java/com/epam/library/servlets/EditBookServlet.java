@@ -1,23 +1,15 @@
 package com.epam.library.servlets;
 
-import com.epam.library.manager.BookManager;
-import com.epam.library.manager.impl.BookManagerImpl;
 import com.epam.library.model.Book;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet("/editBook")
-public class EditBookServlet extends HttpServlet {
-    private BookManager<Integer, Book> bookManager;
-
-    public EditBookServlet() {
-        bookManager = new BookManagerImpl();
-    }
+public class EditBookServlet extends GenericServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
