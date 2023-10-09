@@ -28,8 +28,6 @@ public class AssignServlet extends GenericServlet {
                 req.getRequestDispatcher("/admin").forward(req, resp);
             }
         }
-
-
     }
 
     @Override
