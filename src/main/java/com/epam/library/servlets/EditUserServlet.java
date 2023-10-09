@@ -15,7 +15,6 @@ public class EditUserServlet extends GenericServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int userId = Integer.parseInt(req.getParameter("userId"));
         User user = userManager.getById(userId);
-        req.setAttribute("books", bookManager.getAll());
         req.setAttribute("user", user);
         req.getRequestDispatcher("/WEB-INF/editUser.jsp").forward(req, resp);
     }

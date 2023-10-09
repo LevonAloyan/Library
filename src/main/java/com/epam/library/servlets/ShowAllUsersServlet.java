@@ -13,7 +13,6 @@ public class ShowAllUsersServlet extends GenericServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("users", userManager.getAll());
-        req.setAttribute("books", bookManager.getAll());
 
         req.getRequestDispatcher("/WEB-INF/showAllUsers.jsp").forward(req, resp);
     }
