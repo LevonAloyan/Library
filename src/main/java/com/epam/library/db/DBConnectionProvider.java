@@ -29,7 +29,7 @@ public class DBConnectionProvider {
 
     private void loadProperties() throws IOException {
         Properties properties = new Properties();
-        properties.load(new FileInputStream("/Users/Levon_Aloyan/IdeaProjects/Library/src/main/resources/db-config.properites"));
+        properties.load(new FileInputStream("C:\\Users\\37455\\Desktop\\Library\\src\\main\\resources\\db-config.properites"));
 
         dbUrl = properties.getProperty("db.source.url");
         username = properties.getProperty("db.source.username");
