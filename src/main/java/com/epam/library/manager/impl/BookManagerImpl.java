@@ -87,7 +87,11 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
                 );
                 preparedStatement.setString(1, book.getBookName());
                 preparedStatement.setString(2, book.getAuthorName());
-                preparedStatement.setInt(3, book.getUserId());
+                if (book.getUserId()==0){
+                    preparedStatement.setNull(3, book.getUserId());
+                } else {
+                    preparedStatement.setInt(3, book.getUserId());
+                }
                 preparedStatement.setInt(4, book.getId());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
