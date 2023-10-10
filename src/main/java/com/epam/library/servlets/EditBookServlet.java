@@ -38,6 +38,6 @@ public class EditBookServlet extends GenericServlet{
 
         bookManager.update(book);
 
-        resp.sendRedirect("/showAllBooks");
+        resp.sendRedirect("/books");
     }
 }

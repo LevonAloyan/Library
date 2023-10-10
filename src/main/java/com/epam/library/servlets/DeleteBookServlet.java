@@ -17,7 +17,7 @@ public class DeleteBookServlet extends GenericServlet {
         Book book = new Book();
         book.setId(bookId);
         bookManager.delete(bookId);
-        resp.sendRedirect("/showAllBooks");
+        resp.sendRedirect("/books");
 
     }
 

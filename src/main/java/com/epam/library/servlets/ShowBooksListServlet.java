@@ -9,13 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/showAllBooks")
+@WebServlet("/books")
 public class ShowBooksListServlet extends GenericServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Book> books =  bookManager.getAll();
         req.setAttribute("books", books);
-        req.getRequestDispatcher("/WEB-INF/showBooksList.jsp").forward(req,resp);
+        req.getRequestDispatcher("/booksList").forward(req,resp);
 
     }
 }

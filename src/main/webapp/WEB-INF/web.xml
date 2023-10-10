@@ -65,12 +65,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>books</servlet-name>
-        <jsp-file>/WEB-INF/books.jsp</jsp-file>
+        <servlet-name>booksList</servlet-name>
+        <jsp-file>/WEB-INF/showBooksList.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>books</servlet-name>
-        <url-pattern>/books</url-pattern>
+        <servlet-name>booksList</servlet-name>
+        <url-pattern>/booksList</url-pattern>
     </servlet-mapping>
 
     <servlet>
