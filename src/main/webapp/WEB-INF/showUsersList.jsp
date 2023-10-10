@@ -11,20 +11,27 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <title>Users</title>
-    <%List<User> users = (List<User>) request.getAttribute("users"); %>
+    <%List<User> userList = (List<User>) request.getAttribute("users"); %>
 </head>
 <body>
 <div class="wrapper">
     <h2>All users</h2>
-    <div class="input-box">
-        <% for (User user : users) {
+    <br>
+    <table>
+        <tr>
+            <th>User Name</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        <% for (User user : userList) {
         %>
-        <option value="<%=user.getId()%>"><%=user.getName()%> <%=user.getLastName()%>
-            <a href="/editUser?userId=<%=user.getId()%>">Edit</a>
-            <a href="/deleteUser?userId=<%=user.getId()%>">Delete</a>
-        </option>
+        <tr>
+            <td><%=user.getName()%> <%=user.getLastName()%></td>
+            <td><a href="/editUser?userId=<%=user.getId()%>">Edit</a></td>
+            <td><a href="/deleteUser?userId=<%=user.getId()%>">Delete</a></td>
+        </tr>
         <%}%>
-    </div>
+    </table>
 
     <br>
     <br>
