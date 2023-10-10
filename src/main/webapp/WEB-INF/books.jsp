@@ -16,16 +16,24 @@
 %>
 <div class="wrapper">
     <h2>All books</h2>
-        <div class="input-box">
-
-            <% for (Book book : bookList) {
-            %>
-            <option value="<%=book.getId()%>"><%=book.getBookName()%> <%=book.getAuthorName()%>
-                <a href="/editBook?bookId=<%=book.getId()%>">Edit</a>
-                <a href="/deleteBook?bookId=<%=book.getId()%>">Delete</a>
-            </option>
-            <%}%>
-        </div>
+    <br>
+    <table>
+        <tr>
+            <th>Book Name</th>
+            <th>Author Name</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        <% for (Book book : bookList) {
+        %>
+        <tr>
+            <td><%=book.getBookName()%></td>
+            <td> <%=book.getAuthorName()%></td>
+            <td><a href="/editBook?bookId=<%=book.getId()%>">Edit</a></td>
+            <td><a href="/deleteBook?bookId=<%=book.getId()%>">Delete</a></td>
+        </tr>
+        <%}%>
+    </table>
 
         <br>
         <br>
