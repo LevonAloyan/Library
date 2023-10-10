@@ -17,7 +17,7 @@ public class DeleteUserServlet extends GenericServlet {
         User user = new User();
         user.setId(userId);
         userManager.delete(userId);
-        resp.sendRedirect("/showAllUsers");
+        resp.sendRedirect("/users");
 
     }
 

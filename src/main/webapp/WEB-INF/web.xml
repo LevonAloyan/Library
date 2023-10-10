@@ -56,12 +56,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>users</servlet-name>
-        <jsp-file>/WEB-INF/users.jsp</jsp-file>
+        <servlet-name>usersList</servlet-name>
+        <jsp-file>/WEB-INF/showUsersList.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>users</servlet-name>
-        <url-pattern>/users</url-pattern>
+        <servlet-name>usersList</servlet-name>
+        <url-pattern>/usersList</url-pattern>
     </servlet-mapping>
 
     <servlet>

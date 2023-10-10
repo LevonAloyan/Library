@@ -38,6 +38,6 @@ public class EditUserServlet extends GenericServlet{
 
         userManager.update(user);
 
-        resp.sendRedirect("/showAllUsers");
+        resp.sendRedirect("/users");
     }
 }
