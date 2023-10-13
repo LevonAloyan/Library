@@ -57,7 +57,7 @@
     </form>
 
     <ul>
-        <li><a href="/login">Login Page</a>
+        <li><a href="/">Login Page</a>
         </li>
         <li><a href="/allUsers">Show all users</a>
         </li>

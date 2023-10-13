@@ -17,8 +17,12 @@ public class AuthFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         User user = (User) req.getSession().getAttribute("user");
-        if (user != null && user.getUserRole() == UserRole.ADMIN) {
-            chain.doFilter(req, res);
+        if (user != null) {
+            if (user.getUserRole() == UserRole.ADMIN) {
+                chain.doFilter(req, res);
+            } else if (user.getUserRole() == UserRole.USER) {
+                res.sendRedirect("/dashboard");
+            }
         } else {
             res.sendRedirect("/error_403");
         }
