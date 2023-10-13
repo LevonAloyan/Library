@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.epam.library.model.User" %>
 <%@ page import="java.util.List" %>
 <!DOCTYPE html>
@@ -8,36 +9,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> All users </title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel='stylesheet' type='text/css' href='css/tableStyle.css'/>
+
 </head>
 <body>
-<%
-    List<User> users = (List<User>) request.getAttribute("users");%>
 <div class="wrapper">
     <h2>All users</h2>
     <br>
     <table>
         <tr>
             <th>User Name</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Last Name</th>
+            <th>Actions</th>
         </tr>
-        <%for (User user : users) {%>
-        <tr>
-            <td><%=user.getName()%> <%=user.getLastName()%></td>
-            <td><a href="/editUsers?userId=<%=user.getId()%>">Edit</a></td>
-            <td><a href="/deleteUsers?userId=<%=user.getId()%>">Delete</a></td>
-        </tr>
-        <%}%>
+        <c:forEach items="${users}" var="user">
+            <tr>
+                <td>${user.getName()}</td>
+                <td>${user.getLastName()}</td>
+                <td><a href="/editUsers?userId=${user.getId()}">Edit</a>/
+                    <a href="/deleteUsers?userId=${user.getId()}">Delete</a></td>
+            </tr>
+        </c:forEach>
+
     </table>
     <br>
-    <a href="/">Login</a>
+    <a href="/admin">Go home</a>
 </div>
-
-<%--Select -> list of users--%>
-<%--Select ->  list of books--%>
-
-<%--button assign--%>
-
 
 </body>
 </html>

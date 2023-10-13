@@ -1,6 +1,4 @@
-<%@ page import="com.epam.library.model.User" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.epam.library.model.Book" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
 <html lang="en" dir="ltr">
@@ -11,46 +9,37 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<%
-    List<User> userList = (List<User>) session.getAttribute("users");
-    List<Book> unassignedBooks = (List<Book>) session.getAttribute("unassignedBooks");
 
-%>
 <div class="wrapper">
     <h2>Admin</h2>
 
     <form action="/assign" method="post">
-        <%
-            if (request.getAttribute("successAssign") != null) {
-        %>
-        <span style="color: green"><%=request.getAttribute("successAssign")%></span>
-        <%}%>
+        <c:if test="${equest.getAttribute('successAssign') != null}">
+            <span style="color: green"><%=request.getAttribute("successAssign")%></span>
+        </c:if>
+
         <div class="input-box">
             <label for="selectuser"> Select User:
                 <select name="selectedUser" id="selectuser">
-                    <% for (User user : userList) {
-                    %>
-                    <option value="<%=user.getId()%>"><%=user.getName()%> <%=user.getLastName()%>
-                    </option>
-                    <%}%>
+                    <c:forEach items="${users}" var="user">
+                        <option value="${user.id}"> ${user.name} ${user.lastName}
+                        </option>
+                    </c:forEach>
                 </select>
             </label>
         </div>
 
-        <br>
         <div class="input-box">
             <label for="selectbook"> Select Book:
                 <select name="selectedBook" id="selectbook">
-                    <% for (Book book : unassignedBooks) {
-                    %>
-                    <option value="<%=book.getId()%>"><%=book.getBookName()%>/<%=book.getAuthorName()%>
-                    </option>
-                    <%}%>
+                    <c:forEach items="${unassignedBooks}" var="book">
+                        <option value="${book.getId()}">${book.getBookName()}/${book.getAuthorName()}
+                        </option>
+                    </c:forEach>
                 </select>
             </label>
         </div>
 
-        <br>
         <div class="input-box button">
             <input type="submit" value="Assign">
         </div>
@@ -61,19 +50,14 @@
         </li>
         <li><a href="/users">Show all users</a>
         </li>
-        <li><a href="/">Show all books</a>
+        <li><a href="/book/add">Add book</a>
         </li>
-        <li><a href="/">Show assigned books</a>
+        <li><a href="/books">Show all books</a>
+        </li>
+        <li><a href="/assign_books">Show assigned books</a>
         </li>
     </ul>
 </div>
-
-
-<%--Select -> list of users--%>
-<%--Select ->  list of books--%>
-
-<%--button assign--%>
-
 
 </body>
 </html>

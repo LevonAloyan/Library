@@ -5,7 +5,7 @@ public class Book {
     private int id;
     private String bookName;
     private String authorName;
-    private int userId;
+    private User userId;
 
     public int getId() {
         return id;
@@ -31,11 +31,11 @@ public class Book {
         this.authorName = authorName;
     }
 
-    public int getUserId() {
+    public User getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 }

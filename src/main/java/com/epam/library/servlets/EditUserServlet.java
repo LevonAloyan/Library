@@ -6,18 +6,17 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("/editUsers")
-public class EditUserServlet extends GenericServlet{
+public class EditUserServlet extends GenericServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userId = req.getParameter("userId");
 
         User user = userManager.getById(Integer.valueOf(userId));
-        if (user != null){
+        if (user != null) {
             req.setAttribute("userToEdit", user);
             req.getRequestDispatcher("/WEB-INF/editUser.jsp").forward(req, resp);
         }
@@ -25,7 +24,7 @@ public class EditUserServlet extends GenericServlet{
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String name = req.getParameter("name");
         String lastName = req.getParameter("lastName");
         String email = req.getParameter("email");

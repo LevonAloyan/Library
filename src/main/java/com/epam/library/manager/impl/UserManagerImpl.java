@@ -2,7 +2,6 @@ package com.epam.library.manager.impl;
 
 import com.epam.library.db.DBConnectionProvider;
 import com.epam.library.manager.UserManager;
-import com.epam.library.model.Book;
 import com.epam.library.model.User;
 import com.epam.library.model.UserRole;
 
@@ -15,14 +14,13 @@ import java.util.List;
 
 public class UserManagerImpl implements UserManager<Integer, User> {
 
-    private Connection connection;
+    private static final Connection CONNECTION = DBConnectionProvider.getInstance().getConnection();
 
 
     @Override
     public User getById(Integer id) {
-        connection = DBConnectionProvider.getInstance().getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user where id=?");
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement("SELECT * FROM users where id=?");
             preparedStatement.setInt(1, id);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -45,10 +43,9 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public List<User> getAll() {
-        connection = DBConnectionProvider.getInstance().getConnection();
         List<User> users = new ArrayList<>();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user");
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement("SELECT * FROM users");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -58,7 +55,7 @@ public class UserManagerImpl implements UserManager<Integer, User> {
                 user.setLastName(resultSet.getString("last_name"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
-                user.setUserRole( UserRole.valueOf(resultSet.getString("user_role")));
+                user.setUserRole(UserRole.valueOf(resultSet.getString("user_role")));
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -69,9 +66,8 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public void save(User user) {
-        connection = DBConnectionProvider.getInstance().getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user(name, last_name, email, password) VALUES(?,?,?,?)");
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement("INSERT INTO users(name, last_name, email, password) VALUES(?,?,?,?)");
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getEmail());
@@ -85,14 +81,13 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public void update(User user) {
-        connection = DBConnectionProvider.getInstance().getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user SET name=?, last_name=?, email=? where id=?;");
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getLastName());
-            preparedStatement.setString(3, user.getEmail());
-            preparedStatement.setInt(4, user.getId());
-            preparedStatement.executeUpdate();
+            PreparedStatement ps = CONNECTION.prepareStatement("UPDATE users SET name=?, last_name=?, email=? where id=?;");
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getLastName());
+            ps.setString(3, user.getEmail());
+            ps.setInt(4, user.getId());
+            ps.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -101,9 +96,8 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public void delete(Integer id) {
-        connection = DBConnectionProvider.getInstance().getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM user where id=?;");
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement("DELETE FROM users where id=?;");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
 
@@ -114,10 +108,9 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public User getByEmailAndPassword(String email, String password) {
-        connection = DBConnectionProvider.getInstance().getConnection();
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user where email=? and password=?");
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement("SELECT * FROM users where email=? and password=?");
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -132,6 +125,30 @@ public class UserManagerImpl implements UserManager<Integer, User> {
             }
         } catch (SQLException e) {
             throw new RuntimeException(String.format("Given user with email: %s and password %s not found", email, password));
+        }
+        return null;
+    }
+
+    @Override
+    public User getByEmail(String email) {
+        try {
+            PreparedStatement preparedStatement = CONNECTION.prepareStatement("SELECT * FROM users where email=?");
+            preparedStatement.setString(1, email);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                User user = new User();
+                user.setId(resultSet.getInt("id"));
+                user.setName(resultSet.getString("name"));
+                user.setLastName(resultSet.getString("last_name"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPassword(resultSet.getString("password"));
+                user.setUserRole(UserRole.valueOf(resultSet.getString("user_role")));
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return null;
     }

@@ -37,15 +37,6 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>dashboard</servlet-name>
-        <jsp-file>/WEB-INF/userdashboard.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>dashboard</servlet-name>
-        <url-pattern>/dashboard</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>userlist</servlet-name>
         <jsp-file>/WEB-INF/usersList.jsp</jsp-file>
     </servlet>
@@ -55,12 +46,12 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>booklist</servlet-name>
-        <jsp-file>/WEB-INF/bookList.jsp</jsp-file>
+        <servlet-name>addBook</servlet-name>
+        <jsp-file>/WEB-INF/addBook.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>booklist</servlet-name>
-        <url-pattern>/books</url-pattern>
+        <servlet-name>addBook</servlet-name>
+        <url-pattern>/addBookInDB</url-pattern>
     </servlet-mapping>
 
 

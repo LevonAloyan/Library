@@ -10,12 +10,12 @@ import java.io.IOException;
 import java.util.List;
 
 @WebServlet("/users")
-public class UsersServlet extends GenericServlet{
+public class UserListServlet extends GenericServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> users = userManager.getAll();
-        req.setAttribute("users",users);
+        req.setAttribute("users", users);
         req.getRequestDispatcher("/usersPage").forward(req, resp);
     }
 }

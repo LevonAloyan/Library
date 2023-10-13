@@ -5,7 +5,6 @@ import com.epam.library.model.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -21,10 +20,10 @@ public class AssignServlet extends GenericServlet {
         User user = userManager.getById(selectedUser);
         if (user != null) {
             Book book = bookManager.getById(selectedBook);
-            if (book != null && book.getUserId() == 0) {
-                book.setUserId(selectedUser);
+            if (book != null && book.getUserId() == null) {
+                book.setUserId(user);
                 bookManager.update(book);
-                req.setAttribute("successAssign","Successfully assigned!");
+                req.setAttribute("successAssign", "Successfully assigned!");
                 req.getRequestDispatcher("/admin").forward(req, resp);
             }
         }
