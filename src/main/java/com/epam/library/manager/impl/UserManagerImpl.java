@@ -22,7 +22,7 @@ public class UserManagerImpl implements UserManager<Integer, User> {
     public User getById(Integer id) {
         connection = DBConnectionProvider.getInstance().getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user where id=?");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users where id=?");
             preparedStatement.setInt(1, id);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -48,7 +48,7 @@ public class UserManagerImpl implements UserManager<Integer, User> {
         connection = DBConnectionProvider.getInstance().getConnection();
         List<User> users = new ArrayList<>();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -71,7 +71,7 @@ public class UserManagerImpl implements UserManager<Integer, User> {
     public void save(User user) {
         connection = DBConnectionProvider.getInstance().getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user(name, last_name, email, password) VALUES(?,?,?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users(name, last_name, email, password) VALUES(?,?,?,?)");
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getEmail());
@@ -87,7 +87,7 @@ public class UserManagerImpl implements UserManager<Integer, User> {
     public void update(User user) {
         connection = DBConnectionProvider.getInstance().getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE user SET name=?, last_name=?, email=? where id=?;");
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users SET name=?, last_name=?, email=? where id=?;");
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getEmail());
@@ -103,7 +103,7 @@ public class UserManagerImpl implements UserManager<Integer, User> {
     public void delete(Integer id) {
         connection = DBConnectionProvider.getInstance().getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM user where id=?;");
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users where id=?;");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
 
@@ -117,7 +117,7 @@ public class UserManagerImpl implements UserManager<Integer, User> {
         connection = DBConnectionProvider.getInstance().getConnection();
 
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user where email=? and password=?");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users where email=? and password=?");
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
