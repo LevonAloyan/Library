@@ -6,8 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/my-account/admin")
-public class AdminServlet extends GenericServlet {
+@WebServlet("/books")
+public class ShowAllBooksServlet extends GenericServlet {
 
 
     @Override
@@ -15,7 +15,6 @@ public class AdminServlet extends GenericServlet {
         req.setAttribute("users", userManager.getAll());
         req.setAttribute("books", bookManager.getAll());
 
-        req.getRequestDispatcher("/WEB-INF/adminDashboard.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/showAllBooks.jsp").forward(req, resp);
     }
-
 }

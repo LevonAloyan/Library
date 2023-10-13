@@ -6,11 +6,12 @@ public interface Manager<I, E> {
 
     E getById(I id);
 
-    List<E> getAll ();
+    List<E> getAll();
 
     void save(E entity);
 
     void update(E entity);
 
     void delete(I id);
+
 }

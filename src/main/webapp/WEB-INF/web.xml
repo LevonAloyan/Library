@@ -17,14 +17,25 @@
         <url-pattern>/registerPage</url-pattern>
     </servlet-mapping>
 
-<!--    <servlet>-->
-<!--        <servlet-name>adminPage</servlet-name>-->
-<!--        <jsp-file>/WEB-INF/admin.jsp</jsp-file>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>adminPage</servlet-name>-->
-<!--        <url-pattern>/adminPage</url-pattern>-->
-<!--    </servlet-mapping>-->
+
+    <servlet>
+        <servlet-name>unAssign</servlet-name>
+        <jsp-file>/WEB-INF/unAssign.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>unAssign</servlet-name>
+        <url-pattern>/unassigned</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>dashboard</servlet-name>
+        <jsp-file>/WEB-INF/userDashboard.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dashboard</servlet-name>
+        <url-pattern>/dashboard</url-pattern>
+    </servlet-mapping>
 
 
     <servlet>
@@ -36,56 +47,13 @@
         <url-pattern>/error_403</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>dashboard</servlet-name>
-        <jsp-file>/WEB-INF/userdashboard.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>dashboard</servlet-name>
-        <url-pattern>/dashboard</url-pattern>
-    </servlet-mapping>
 
-    <servlet>
-        <servlet-name>userlist</servlet-name>
-        <jsp-file>/WEB-INF/usersList.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>userlist</servlet-name>
-        <url-pattern>/usersPage</url-pattern>
-    </servlet-mapping>
+<!--        <error-page>-->
+<!--            <location>/WEB-INF/error_404.jsp</location>-->
+<!--            <error-code>404</error-code>-->
+<!--        </error-page>-->
+<!--        <error-page>-->
+<!--            <location></location>-->
+<!--        </error-page>-->
 
-    <servlet>
-        <servlet-name>booklist</servlet-name>
-        <jsp-file>/WEB-INF/bookList.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>booklist</servlet-name>
-        <url-pattern>/books</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>assignedbooks</servlet-name>
-        <jsp-file>/WEB-INF/assignedbooks.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>assignedbooks</servlet-name>
-        <url-pattern>/assignedbooks</url-pattern>
-    </servlet-mapping>
-
-    <error-page>
-        <location>/WEB-INF/error_404.jsp</location>
-        <error-code>404</error-code>
-    </error-page>
-
-
-<!--    <filter>-->
-<!--        <filter-name>CollectDataFilter</filter-name>-->
-<!--        <filter-class>com.epam.library.filter.CollectDataFilter</filter-class>-->
-<!--    </filter>-->
-<!--    <filter-mapping>-->
-<!--        <filter-name>CollectDataFilter</filter-name>-->
-<!--        <url-pattern>/admin</url-pattern>-->
-<!--        <url-pattern>/adminPage</url-pattern>-->
-<!--    </filter-mapping>-->
 </web-app>

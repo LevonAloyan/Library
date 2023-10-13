@@ -6,39 +6,37 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("/editUsers")
-public class EditUserServlet extends GenericServlet{
+@WebServlet("/user/edit")
+public class EditUserServlet extends GenericServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userId = req.getParameter("userId");
-
-        User user = userManager.getById(Integer.valueOf(userId));
-        if (user != null){
-            req.setAttribute("userToEdit", user);
-            req.getRequestDispatcher("/WEB-INF/editUser.jsp").forward(req, resp);
-        }
-
+        int userId = Integer.parseInt(req.getParameter("userId"));
+        User user = userManager.getById(userId);
+        req.setAttribute("user", user);
+        req.getRequestDispatcher("/WEB-INF/editUser.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        int userId = Integer.parseInt(req.getParameter("userId"));
+
         String name = req.getParameter("name");
-        String lastName = req.getParameter("lastName");
+        String surname = req.getParameter("lastName");
         String email = req.getParameter("email");
-        String userId = req.getParameter("userId");
 
-        User user = userManager.getById(Integer.valueOf(userId));
-        if (user != null) {
-            user.setName(name);
-            user.setLastName(lastName);
-            user.setEmail(email);
-            userManager.update(user);
-        }
+        User user = User.builder()
+                .id(userId)
+                .name(name)
+                .lastName(surname)
+                .email(email)
+                .password(userManager.getById(userId).getPassword())
+                .build();
 
+        userManager.update(user);
         resp.sendRedirect("/users");
     }
+
 }
