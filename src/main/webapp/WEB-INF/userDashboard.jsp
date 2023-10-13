@@ -1,8 +1,10 @@
-<%@ page import="com.epam.library.model.User" %>
-<%@ page import="com.epam.library.model.Book" %>
-<%@ page import="com.epam.library.manager.impl.BookManagerImpl" %>
-<%@ page import="com.epam.library.manager.BookManager" %>
-<%@ page import="java.util.List" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: Admin
+  Date: 13.10.2023
+  Time: 17:17
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page import="com.epam.library.model.User" %>
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
@@ -19,24 +21,5 @@
     <%=((User)session.getAttribute("user")).getName()%>
 </div>
 
-<%--List of all your book--%>
-<div class="book-list">
-    <h3>Your Books</h3>
-    <ul>
-        <%
-            BookManager<Integer, Book> bookManager = new BookManagerImpl();
-            User user = (User) session.getAttribute("user");
-            List<Book> userBooks = (List<Book>) bookManager.getById(user.getId());
-
-            for (Book book : userBooks) {
-                if (book.getUserId() == user.getId())
-        %>
-        <li><%= book.getBookName() %> by <%= book.getAuthorName() %></li>
-        <%
-            }
-        %>
-    </ul>
-
-</div>
 </body>
 </html>
