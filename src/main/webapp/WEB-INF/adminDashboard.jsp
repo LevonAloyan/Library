@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.epam.library.model.User" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.epam.library.model.Book" %><%--
@@ -13,11 +14,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admins dashboard</title>
     <link rel="stylesheet" href="../css/style.css">
+    <h2> Welcome <c:set var="user" value="${sessionScope.user.name}"/><c:out value="${user}"/></h2>
 </head>
 <body>
 <div class="wrapper">
-    <h2>Welcome <%=((User) session.getAttribute("user")).getName()%></h2>
     <form action="/add-book" method="post">
+        <c:if test="${not empty requestScope.bookAddingMsg}">
+            <span style="color: green">${requestScope.bookAddingMsg}</span>
+        </c:if>
         <div class="input-box">
             <input name="bookName" type="text" placeholder="Enter book's name" required>
         </div>

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.epam.library.model.Book" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.epam.library.model.User" %><%--
@@ -13,15 +14,13 @@
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Assign book to user</title>
-        <%
-            List<User> users = (List<User>) request.getAttribute("users");
-            List<Book> assignedBooks = (List<Book>) request.getAttribute("assignedBooks");
-        %>
         <link rel="stylesheet" href="../css/style.css">
-        <h2>Admin</h2>
     </head>
 <body>
 <div class="wrapper">
+    <c:if test="${not empty requestScope.successUnAssign}">
+        <span style="color: green">${requestScope.successUnAssign}</span>
+    </c:if>
     <form action="/book/unassigned" method="post">
         <div class="wrapper">
             <table>
@@ -34,22 +33,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                <% for (Book book : assignedBooks) {
-                    ;%>
+                <c:forEach var="book" items="${assignedBooks}">
                 <tr>
-                    <td><%= book.getBookName() %>
+                    <td>${book.bookName}
                     </td>
-                    <td><%= book.getAuthorName() %>
+                    <td>${book.authorName}
                     </td>
-                    <td><%= book.getUserId() %>
+                    <td>${book.userId}
                     </td>
                     <td>
-                        <input type="hidden" name="bookId" value="<%= book.getId() %>">
+                        <input type="hidden" name="bookId" value="${book.id}">
                         <input type="submit" value="Unassign" class="input-box button">
                     </td>
                 </tr>
                 </tbody>
-                <% } %>
+                </c:forEach>
             </table>
         </div>
     </form>

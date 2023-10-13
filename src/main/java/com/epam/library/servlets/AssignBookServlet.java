@@ -35,12 +35,12 @@ public class AssignBookServlet extends GenericServlet {
                 if (book != null && book.getUserId() == 0) {
                     book.setUserId(selectedUser);
                     bookManager.update(book);
+                    List<Book> unassignedBooks = bookManager.getAllUnassignedBooks();
+                    req.getSession().setAttribute("unassignedBooks", unassignedBooks);
                     req.setAttribute("successAssign","Successfully assigned!");
                     req.getRequestDispatcher("/WEB-INF/assign.jsp").forward(req, resp);
                 }
             }
 
     }
-
-
 }

@@ -52,10 +52,9 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
     @Override
     public void save(Book book) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO book(book_name, author_name, user_id) VALUES(?,?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO book(book_name, author_name) VALUES(?,?)");
             preparedStatement.setString(1, book.getBookName());
             preparedStatement.setString(2, book.getAuthorName());
-            preparedStatement.setInt(3, book.getUserId());
             int execute = preparedStatement.executeUpdate();
             System.out.println(execute);
         } catch (SQLException e) {
@@ -175,10 +174,11 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public List<Book> getUserAllBooks(Integer userId) {
-        String sql = "SELECT * FROM  book ORDER BY id desc LIMIT 20 WHERE user_id = " + userId;
+        String sql = "SELECT id, bookName, authorName FROM Book WHERE user_id = ?";
         List<Book> books = new LinkedList<>();
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, userId);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
                 books.add(getBooksFromResulSet(resultSet));
@@ -189,7 +189,6 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
         }
         return books;
     }
-
 
     private Book getBooksFromResulSet(ResultSet resultSet) throws SQLException {
         return Book.builder()

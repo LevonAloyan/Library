@@ -17,33 +17,24 @@
         <div class="input-box">
             <input name="lastName" type="text" placeholder="Enter your last name" required>
         </div>
-        <%
-            if (request.getAttribute("usernameExistsErr") != null) {
-        %>
-        <span style="color: red"><%=request.getAttribute("usernameExistsErr")%></span>
-        <%}%>
-        <%
-            if (request.getAttribute("emailFormatErr") != null) {
-        %>
-        <span style="color: red"><%=request.getAttribute("emailFormatErr")%></span>
-        <%}%>
+        <c:if test="${not empty requestScope.usernameExistsErr}">
+            <span style="color: red">${requestScope.usernameExistsErr}</span>
+        </c:if>
+        <c:if test="${not empty requestScope.emailFormatErr}">
+            <span style="color: red">${requestScope.emailFormatErr}</span>
+        </c:if>
         <div class="input-box">
             <input name="email" type="text" placeholder="Enter your email" required>
         </div>
-        <%
-            if (request.getAttribute("passwordErrMsg") != null) {
-        %>
-        <span style="color: red"><%=request.getAttribute("passwordErrMsg")%></span>
-        <%}%>
-
+        <c:if test="${not empty requestScope.passwordErrMsg}">
+            <span style="color: red">${requestScope.passwordErrMsg}</span>
+        </c:if>
         <div class="input-box">
             <input name="password" type="password" placeholder="Create password" required>
         </div>
-        <%
-            if (request.getAttribute("passwordMatchError") != null) {
-        %>
-        <span style="color: red"><%=request.getAttribute("passwordMatchError")%></span>
-        <%}%>
+        <c:if test="${not empty requestScope.passwordMatchError}">
+            <span style="color: red">${requestScope.passwordMatchError}</span>
+        </c:if>
         <div class="input-box">
             <input name="confirmPassword" type="password" placeholder="Confirm password" required>
         </div>

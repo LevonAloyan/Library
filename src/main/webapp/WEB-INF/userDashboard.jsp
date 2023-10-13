@@ -1,47 +1,45 @@
-<%@ page import="com.epam.library.model.User" %>
-<%@ page import="com.epam.library.model.Book" %>
-<%@ page import="java.util.List" %>
-<!DOCTYPE html>
-<!-- Coding by CodingLab | www.codinglabweb.com-->
-<html lang="en" dir="ltr">
+<%--
+  Created by IntelliJ IDEA.
+  User: Noname
+  Date: 10/13/2023
+  Time: 5:20 PM
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Registration or Sign Up form in HTML CSS | CodingLab </title>
+    <title>User dashboard</title>
     <link rel="stylesheet" href="../css/style.css">
+    <h2>Welcome <c:out value="${sessionScope.user.name}"/></h2>
 </head>
 <body>
 <div class="wrapper">
-    <h2>Welcome <%=((User) session.getAttribute("user")).getName()%>
-    </h2>
+    <!-- Display the list of books -->
+    <h3>Books:</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach var="book" items="${userAllBooks}">
+            <c:if test="${book.userId == user.id}">
+                <tr>
+                    <td>${book.bookName}
+                    </td>
+                    <td>${book.authorName}
+                    </td>
+                </tr>
+            </c:if>
+        </c:forEach>
+        </tbody>
+    </table>
+    <div class="web-field">
+        <a href="/">Back</a><br>
+    </div>
 </div>
-<h3>Your Books:</h3>
-<% List<Book> books = (List<Book>) session.getAttribute("books");
-    User user = ((User) session.getAttribute("user"));%>
-%>
-<table>
-    <thead>
-    <tr>
-        <th>Title</th>
-        <th>Author</th>
-    </tr>
-    </thead>
-    <tbody>
-
-    <% for (Book book : books) {
-        if (book.getUserId() == user.getId())%>
-    <tr>
-        <td><%= book.getBookName() %>
-        </td>
-        <td><%= book.getAuthorName() %>
-        </td>
-    </tr>
-    </tbody>
-    <% } %>
-</table>
-<div class="web-field">
-    <a href="/my-account">Back</a><br>
-</div>
-</form>
 </body>
 </html>

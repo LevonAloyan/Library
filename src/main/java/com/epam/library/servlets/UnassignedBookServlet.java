@@ -16,10 +16,10 @@ public class UnassignedBookServlet extends GenericServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<User> users = userManager.getAll();
-
         List<Book> assignedBooks = bookManager.getAllAssignedBooks();
-        req.setAttribute("users", users);
-        req.setAttribute("assignedBooks", assignedBooks);
+
+        req.getSession().setAttribute("users", users);
+        req.getSession().setAttribute("assignedBooks", assignedBooks);
         req.getRequestDispatcher("/WEB-INF/unAssign.jsp").forward(req, resp);
     }
 
@@ -30,8 +30,10 @@ public class UnassignedBookServlet extends GenericServlet {
         Book book = bookManager.getById(selectedBook);
         if (book != null) {
             bookManager.unAssign(book);
-            resp.sendRedirect("/books");
+            List<Book> assignedBooks = bookManager.getAllAssignedBooks();
+            req.getSession().setAttribute("assignedBooks", assignedBooks);
+            req.setAttribute("successUnAssign","Successfully unAssigned!");
+            req.getRequestDispatcher("/WEB-INF/unAssign.jsp").include(req, resp);
         }
     }
-
 }

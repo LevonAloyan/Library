@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.epam.library.model.User" %><%--
   Created by IntelliJ IDEA.
   User: Noname
@@ -14,38 +15,31 @@
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
-<%
-    User user = (User) request.getAttribute("user");
-%>
+
+<c:set var="user" value="${requestScope.user}"/>
 <div class="wrapper">
     <h2>Edit</h2>
     <form action="/user/edit" method="post">
         <div class="input-box">
-            <input type="hidden" name="userId" value="<%=user.getId()%>">
-            <input name="name" type="text" placeholder="Enter your name" value="<%=user.getName()%>" required>
+            <input type="hidden" name="userId" value="${user.id}">
+            <input name="name" type="text" placeholder="Enter your name" value="${user.name}" required>
         </div>
         <div class="input-box">
-            <input name="lastName" type="text" placeholder="Enter your last name" value="<%=user.getLastName()%>"
+            <input name="lastName" type="text" placeholder="Enter your last name" value="${user.lastName}"
                    required>
         </div>
-        <%
-            if (request.getAttribute("usernameExistsErr") != null) {
-        %>
-        <span style="color: red"><%=request.getAttribute("usernameExistsErr")%></span>
-        <%}%>
-        <%
-            if (request.getAttribute("emailFormatErr") != null) {
-        %>
-        <span style="color: red"><%=request.getAttribute("emailFormatErr")%></span>
-        <%}%>
+        <c:if test="${not empty requestScope.usernameExistsErr}">
+            <span style="color: red">${requestScope.successAssign}</span></c:if>
+
+
+        <c:if test="${not empty requestScope.emailFormatErr}">
+            <span style="color: red">${requestScope.emailFormatErr}</span></c:if>
+
         <div class="input-box">
-            <input name="email" type="text" placeholder="Enter your email" value="<%=user.getEmail()%>" required>
+            <input name="email" type="text" placeholder="Enter your email" value="${user.email}" required>
         </div>
-        <%
-            if (request.getAttribute("passwordErrMsg") != null) {
-        %>
-        <span style="color: red"><%=request.getAttribute("passwordErrMsg")%></span>
-        <%}%>
+        <c:if test="${not empty requestScope.passwordErrMsg}">
+            <span style="color: red">${requestScope.passwordErrMsg}</span></c:if>
 
         <div class="input-box button">
             <input type="Submit" value="Update user's data">

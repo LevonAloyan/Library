@@ -9,7 +9,6 @@ import com.epam.library.model.User;
 
 import javax.servlet.http.HttpServlet;
 
-
 public class GenericServlet extends HttpServlet {
     protected UserManager<Integer, User> userManager;
     protected BookManager<Integer, Book> bookManager;

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.epam.library.model.User" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
@@ -10,13 +11,11 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%List<User> users = (List<User>) request.getAttribute("users"); %>
     <link rel="stylesheet" href="css/style.css">
     <h3>Users:</h3>
 </head>
 <body>
 <div class="wrapper">
-    <%--    <form action="/view-all-users" method="post">--%>
     <table>
         <thead>
         <tr>
@@ -26,17 +25,18 @@
         </tr>
         </thead>
         <tbody>
-        <% for (User user : users) { %>
-        <tr>
-            <td><%= user.getName() %>
-            </td>
-            <td><%= user.getLastName() %>
-            </td>
-            <td><%= user.getEmail() %>
-                <a href="/user/edit?userId=<%=user.getId()%>">Edit</a> | <a href="/user/remove?userId=<%=user.getId()%>">Delete</a>
-            </td>
-        </tr>
-        <% } %>
+        <c:forEach var="user" items="${users}">
+            <tr>
+                <td>${user.name}
+                </td>
+                <td>${user.lastName}
+                </td>
+                <td>${user.email}
+                    <a href="/user/edit?userId=${user.id}">Edit</a> | <a
+                            href="/user/remove?userId=${user.id}">Delete</a>
+                </td>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
 

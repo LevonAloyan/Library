@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.epam.library.model.Book" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.epam.library.model.User" %><%--
@@ -12,8 +13,6 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View all books</title>
-    <% List<Book> books = (List<Book>) request.getAttribute("books");
-    %>
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -29,17 +28,17 @@
             </tr>
             </thead>
             <tbody>
-            <% for (Book book : books) { %>
-            <tr>
-                <td><%= book.getBookName() %>
-                </td>
-                <td><%= book.getAuthorName() %>
-                    <a href="/book/edit?bookId=<%=book.getId()%>">Edit</a> | <a
-                            href="/book/remove?bookId=<%=book.getId()%>">Delete</a>
-                </td>
-            </tr>
+            <c:forEach var="book" items="${books}">
+                <tr>
+                    <td>${book.bookName}
+                    </td>
+                    <td>${book.authorName}
+                        <a href="/book/edit?bookId=${book.id}">Edit</a> | <a
+                                href="/book/remove?bookId=${book.id}">Delete</a>
+                    </td>
+                </tr>
+            </c:forEach>
             </tbody>
-            <% } %>
         </table>
         <div class="web-field">
             <a href="/my-account">Back</a><br>
