@@ -5,6 +5,7 @@
   Time: 17:17
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.epam.library.model.User" %>
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
@@ -18,7 +19,9 @@
 <body>
 <div class="wrapper">
     <h2>Welcome</h2>
-    <%=((User)session.getAttribute("user")).getName()%>
+    <c:out value="${sessionScope.user.name}"/>
+    <c:out value="${sessionScope.user.lastName}"/>
+
 </div>
 
 </body>

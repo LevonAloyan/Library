@@ -1,5 +1,7 @@
 <%@ page import="com.epam.library.model.Book" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><%--
+
   Created by IntelliJ IDEA.
   User: Admin
   Date: 06.10.2023
@@ -17,18 +19,18 @@
     <title>Edit Book</title>
 </head>
 <body>
-<%Book bookToEdit = (Book)request.getAttribute("bookToEdit");%>
+<c:set var="bookToEdit" value="${requestScope.bookToEdit}"/>
 <div class="wrapper">
 <h1>Edit Books</h1>
 <br>
     <form action="/editBooks" method="post">
         <div class="input-box">
-            <input name="bookName" type="text" placeholder="Enter book name" required value="<%=bookToEdit.getBookName()%>">
+            <input name="bookName" type="text" placeholder="Enter book name" required value="${bookToEdit.bookName}">
         </div>
         <div class="input-box">
-            <input name="authorName" type="text" placeholder="Enter author name" required value="<%=bookToEdit.getAuthorName()%>">
+            <input name="authorName" type="text" placeholder="Enter author name" required value="${bookToEdit.authorName}">
         </div>
-        <input type="hidden" name="bookId" value="<%=bookToEdit.getId()%>">
+        <input type="hidden" name="bookId" value="${bookToEdit.id}">
 
         <div class="input-box button">
             <input type="Submit" value="Edit book">

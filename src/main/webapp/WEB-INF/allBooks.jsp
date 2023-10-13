@@ -1,6 +1,7 @@
 <%@ page import="com.epam.library.model.User" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.epam.library.model.Book" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
 <html lang="en" dir="ltr">
@@ -11,23 +12,19 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<%
-    List<Book> bookList = (List<Book>) session.getAttribute("books");
-%>
 <div class="wrapper">
     <h2>All Books</h2>
     <br>
     <table>
         <tbody>
-        <% for (Book book : bookList) {
-        %>
-        <tr>
-            <td><%=book.getBookName()%>
-            </td>
-            <td><a href="/editBooks?bookId=<%= book.getId() %>">Edit</a></td>
-            <td><a href="/deleteBooks?bookId=<%= book.getId() %>">Delete</a></td>
+        <c:forEach var="book" items="${sessionScope.books}">
 
-            <% } %>
+        <tr>
+            <td>${book.bookName}</td>
+            <td><a href="/editBooks?bookId=${book.id}">Edit</a></td>
+            <td><a href="/deleteBooks?bookId=${book.id}">Delete</a></td>
+
+            </c:forEach>
         </tr>
         </tbody>
     </table>

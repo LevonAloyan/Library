@@ -1,5 +1,6 @@
 <%@ page import="com.epam.library.model.User" %>
 <%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
 <html lang="en" dir="ltr">
@@ -10,21 +11,22 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<%User userToEdit = (User)request.getAttribute("userToEdit");%>
+
+<c:set var="userToEdit" value="${requestScope.userToEdit}"/>
 <div class="wrapper">
     <h2>Edit user</h2>
     <br>
     <form action="/editUsers" method="post">
         <div class="input-box">
-            <input name="name" type="text" placeholder="Enter user name" required value="<%=userToEdit.getName()%>">
+            <input name="name" type="text" placeholder="Enter user name" required value="${userToEdit.name}">
         </div>
         <div class="input-box">
-            <input name="lastName" type="text" placeholder="Enter user last name" required value="<%=userToEdit.getLastName()%>">
+            <input name="lastName" type="text" placeholder="Enter user last name" required value="${userToEdit.lastName}">
         </div>
         <div class="input-box">
-            <input name="email" type="text" placeholder="Enter user email" required value="<%=userToEdit.getEmail()%>">
+            <input name="email" type="text" placeholder="Enter user email" required value="${userToEdit.email}">
         </div>
-        <input type="hidden" name="userId" value="<%=userToEdit.getId()%>">
+        <input type="hidden" name="userId" value="${userToEdit.id}">
 
         <div class="input-box button">
             <input type="Submit" value="Edit user">

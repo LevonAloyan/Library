@@ -1,5 +1,6 @@
 <%@ page import="com.epam.library.model.User" %>
 <%@ page import="java.util.List" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
 <html lang="en" dir="ltr">
@@ -18,14 +19,13 @@
     <br>
     <table>
         <tbody>
-        <% for (User user : userList) {
-        %>
+        <c:forEach var="user" items="${sessionScope.users}">
         <tr>
-            <td><%=user.getName()%></td>
-            <td><%=user.getLastName()%></td>
-            <td><a href="/editUsers?userId=<%= user.getId() %>">Edit</a></td>
-            <td><a href="/deleteUsers?userId=<%= user.getId() %>">Delete</a></td>
-            <% } %>
+            <td>${user.name}</td>
+            <td>${user.lastName}</td>
+            <td><a href="/editUsers?userId=${user.id}">Edit</a></td>
+            <td><a href="/deleteUsers?userId=${user.id}">Delete</a></td>
+            </c:forEach>
         </tr>
         </tbody>
     </table>
