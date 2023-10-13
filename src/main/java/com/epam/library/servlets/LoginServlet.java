@@ -21,21 +21,16 @@ public class LoginServlet extends GenericServlet {
         String password = req.getParameter("password");
 
         User user = userManager.getByEmailAndPassword(email, password);
-        if (user != null){
+        if (user != null) {
             req.getSession().setAttribute("user", user);
-            if (user.getUserRole() == ADMIN){
-                req.getRequestDispatcher("/admin").forward(req, resp);
-            }else if (user.getUserRole() == USER) {
-                req.getRequestDispatcher("/dashboard").forward(req, resp);
+            if (user.getUserRole() == ADMIN) {
+                resp.sendRedirect("/admin");
+            } else if (user.getUserRole() == USER) {
+                resp.sendRedirect("/dashboard");
             }
-        }else {
-            req.setAttribute("loginError","The email and password you entered is not correct.");
+        } else {
+            req.setAttribute("loginError", "The email and password you entered is not correct.");
             req.getRequestDispatcher("/").forward(req, resp);
         }
-    }
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
-    }
-}
+    }  }

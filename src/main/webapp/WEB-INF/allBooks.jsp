@@ -24,9 +24,8 @@
         <tr>
             <td><%=book.getBookName()%>
             </td>
-            <td><a href="/editBook?id=<%= book.getBookName() %>">Edit</a></td>
-            <td><a href="/deleteBook?id=<%= book.getBookName() %>">Delete</a></td>
-
+            <td><a href="/editBooks?bookId=<%= book.getId() %>">Edit</a></td>
+            <td><a href="/deleteBooks?bookId=<%= book.getId() %>">Delete</a></td>
 
             <% } %>
         </tr>

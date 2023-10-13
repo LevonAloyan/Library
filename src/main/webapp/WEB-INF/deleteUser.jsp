@@ -16,14 +16,12 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <head>
-    <title>>User Deleted</title>
+
 </head>
 <body>
-       <h1>User Deleted</h1>
-
-        <p>The user has been successfully deleted.</p>
-
-        <p><a href="/users">Back to All Users</a></p>
+       <h1>The user has been successfully deleted.</h1>
+       <br>
+       <p><a href="/allUsers">Back to All Users</a></p>
 
 </body>
 </html>

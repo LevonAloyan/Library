@@ -9,51 +9,36 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-@WebServlet("/editUser")
-public class EditUserServlet extends GenericServlet {
+@WebServlet("/editUsers")
+public class EditUserServlet extends GenericServlet{
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userId = req.getParameter("id");
+        String userId = req.getParameter("userId");
 
-        if (userId != null) {
-            userManager.getById(Integer.valueOf(userId));
-
-            User userToEdit = userManager.getById(Integer.valueOf(userId));
-            if (userToEdit != null) {
-                req.getSession().setAttribute("user", userToEdit);
-                req.getRequestDispatcher("/editUser.jsp").forward(req, resp);
-            } else {
-                resp.sendRedirect("error_404");
-            }
+        User user = userManager.getById(Integer.valueOf(userId));
+        if (user != null){
+            req.setAttribute("userToEdit", user);
+            req.getRequestDispatcher("/WEB-INF/editUsers.jsp").forward(req, resp);
         }
-    }
 
+    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userIdStr = req.getParameter("id");
+        String name = req.getParameter("name");
+        String lastName = req.getParameter("lastName");
+        String email = req.getParameter("email");
+        String userId = req.getParameter("userId");
 
-        if (userIdStr != null) {
-            try {
-                int userId = Integer.parseInt(userIdStr);
-                User user = userManager.getById(userId);
-
-                if (user != null) {
-                    String newName = req.getParameter("newName");
-                    String newLastName = req.getParameter("newLastName");
-
-                    user.setName(newName);
-                    user.setLastName(newLastName);
-                    userManager.update(user);
-
-                    resp.sendRedirect("/allUsers.jsp");
-                } else {
-                    resp.sendRedirect("/error_404.jsp");
-                }
-            } catch (NumberFormatException e) {
-                resp.sendRedirect("/error_404.jsp");
-            }
+        User user = userManager.getById(Integer.valueOf(userId));
+        if (user != null) {
+            user.setName(name);
+            user.setLastName(lastName);
+            user.setEmail(email);
+            userManager.update(user);
         }
+
+        resp.sendRedirect("/allUsers");
     }
 }

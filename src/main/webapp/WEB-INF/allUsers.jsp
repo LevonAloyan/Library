@@ -23,8 +23,8 @@
         <tr>
             <td><%=user.getName()%></td>
             <td><%=user.getLastName()%></td>
-            <td><a href="/editUser?id=<%= user.getId() %>">Edit</a></td>
-            <td><a href="/deleteUser?id=<%= user.getId() %>">Delete</a></td>
+            <td><a href="/editUsers?userId=<%= user.getId() %>">Edit</a></td>
+            <td><a href="/deleteUsers?userId=<%= user.getId() %>">Delete</a></td>
             <% } %>
         </tr>
         </tbody>

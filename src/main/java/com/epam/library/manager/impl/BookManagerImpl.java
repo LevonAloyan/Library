@@ -13,11 +13,10 @@ import java.util.List;
 
 public class BookManagerImpl implements BookManager<Integer, Book> {
 
-    private Connection connection=DBConnectionProvider.getInstance().getConnection();
+    private final Connection connection = DBConnectionProvider.getInstance().getConnection();
 
     @Override
     public Book getById(Integer id) {
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM book where id=?");
             preparedStatement.setInt(1, id);
@@ -40,7 +39,6 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public List<Book> getAll() {
-
         List<Book> books = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM book");
@@ -64,7 +62,6 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public void save(Book book) {
-
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO book(book_name, author_name, user_id) VALUES(?,?,?)");
             preparedStatement.setString(1, book.getBookName());
@@ -80,7 +77,6 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
     @Override
     public void update(Book book) {
         if (book != null) {
-
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(
                         "UPDATE book SET book_name=?, author_name=?, user_id=? WHERE id=?"
@@ -99,7 +95,7 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
     @Override
     public void delete(Integer id) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM books WHERE id = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM book WHERE id = ?");
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -110,7 +106,6 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public List<Book> getAllUnassignedBooks() {
-
         List<Book> books = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM book where user_id is null");

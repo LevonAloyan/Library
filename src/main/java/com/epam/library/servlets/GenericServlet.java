@@ -7,6 +7,7 @@ import com.epam.library.manager.impl.UserManagerImpl;
 import com.epam.library.model.Book;
 import com.epam.library.model.User;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 
 public class GenericServlet extends HttpServlet {

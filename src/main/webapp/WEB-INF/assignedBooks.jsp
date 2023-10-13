@@ -26,16 +26,20 @@
             <td><%= book.getBookName() %></td>
             <td><%= user.getName() %></td>
             <td><%= user.getLastName() %></td>
-            <td><a href="/unAssignBook?id=<%= book.getId() %>">Unassign</a></td>
+            <td><a href="/unAssignBook?bookId=<%= book.getId() %>">Unassign</a></td>
         </tr>
 
         <%}%>
+        <% if (request.getAttribute("unassignError") != null) { %>
+        <span style="color: red"><%= request.getAttribute("unassignError") %></span>
+
+        <% } else if (request.getAttribute("unassignSuccess") != null) { %>
+        <span style="color: green"><%= request.getAttribute("unassignSuccess") %></span>
+        <% } %>
     </table>
     <br>
     <a href="/">Login</a>
 </div>
-</body>
-</html>
 <%!
     private User getUserForBook(List<User> userList, Book book) {
         for (User user : userList) {
@@ -46,3 +50,6 @@
         return null;
     }
 %>
+</body>
+</html>
+

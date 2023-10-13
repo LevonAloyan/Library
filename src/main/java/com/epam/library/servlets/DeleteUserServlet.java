@@ -8,33 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/deleteUser")
+@WebServlet("/deleteUsers")
 public class DeleteUserServlet extends GenericServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String userIdStr = req.getParameter("id");
+        String userId = req.getParameter("userId");
 
-        if( userIdStr != null) {
-            try {
-                int userId = Integer.parseInt(userIdStr);
-                User userToDelete = userManager.getById(userId);
-                if (userToDelete != null) {
-                    userManager.delete(userId);
-
-                    resp.sendRedirect("/deleteUser.jsp");
-                } else {
-                    resp.sendRedirect("/error_404.jsp");
-                }
-            } catch (NumberFormatException e) {
-                resp.sendRedirect("/error_404.jsp");
-            }
-
+        if (userId != null && !userId.isEmpty()) {
+            userManager.delete(Integer.valueOf(userId));
+            resp.sendRedirect("/deleteUser");
         }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       doGet(req, resp);
-    }
 }

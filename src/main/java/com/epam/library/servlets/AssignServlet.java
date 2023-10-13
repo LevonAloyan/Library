@@ -24,7 +24,7 @@ public class AssignServlet extends GenericServlet {
                 book.setUserId(selectedUser);
                 bookManager.update(book);
                 req.setAttribute("successAssign", "Successfully assigned!");
-                req.getRequestDispatcher("/admin").forward(req, resp);
+                req.getRequestDispatcher("/adminPage").forward(req, resp);
             }
         }
 

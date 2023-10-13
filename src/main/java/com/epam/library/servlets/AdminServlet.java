@@ -12,9 +12,9 @@ import java.util.List;
 @WebServlet("/admin")
 public class AdminServlet extends GenericServlet {
 
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         List<User> users = userManager.getAll();
         req.getSession().setAttribute("users", users);
 

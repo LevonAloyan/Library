@@ -17,14 +17,14 @@
         <url-pattern>/registerPage</url-pattern>
     </servlet-mapping>
 
-<!--    <servlet>-->
-<!--        <servlet-name>adminPage</servlet-name>-->
-<!--        <jsp-file>/WEB-INF/admin.jsp</jsp-file>-->
-<!--    </servlet>-->
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>adminPage</servlet-name>-->
-<!--        <url-pattern>/adminPage</url-pattern>-->
-<!--    </servlet-mapping>-->
+    <servlet>
+        <servlet-name>adminPage</servlet-name>
+        <jsp-file>/WEB-INF/admin.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>adminPage</servlet-name>
+        <url-pattern>/adminPage</url-pattern>
+    </servlet-mapping>
 
 
     <servlet>
@@ -38,11 +38,32 @@
 
     <servlet>
         <servlet-name>dashboard</servlet-name>
-        <jsp-file>/WEB-INF/userdashboard.jsp</jsp-file>
+        <jsp-file>/WEB-INF/userDashboard.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>dashboard</servlet-name>
         <url-pattern>/dashboard</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteUser</servlet-name>
+        <jsp-file>/WEB-INF/deleteUser.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>deleteUser</servlet-name>
+        <url-pattern>/deleteUser</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>DeleteBookServlet</servlet-name>
+        <jsp-file>/WEB-INF/deleteBook.jsp</jsp-file>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DeleteBookServlet</servlet-name>
+        <url-pattern>/deleteBook</url-pattern>
     </servlet-mapping>
 
 

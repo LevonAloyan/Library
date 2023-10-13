@@ -15,12 +15,11 @@ import java.util.List;
 
 public class UserManagerImpl implements UserManager<Integer, User> {
 
-    private Connection connection;
+    private final Connection connection = DBConnectionProvider.getInstance().getConnection();
 
 
     @Override
     public User getById(Integer id) {
-        connection = DBConnectionProvider.getInstance().getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user where id=?");
             preparedStatement.setInt(1, id);
@@ -45,7 +44,6 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public List<User> getAll() {
-        connection = DBConnectionProvider.getInstance().getConnection();
         List<User> users = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user");
@@ -69,7 +67,6 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public void save(User user) {
-        connection = DBConnectionProvider.getInstance().getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user(name, last_name, email, password) VALUES(?,?,?,?)");
             preparedStatement.setString(1, user.getName());
@@ -85,26 +82,22 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public void update(User user) {
-        connection = DBConnectionProvider.getInstance().getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "UPDATE user SET name=?, last_name=?, email=?, password=?, user_role=? WHERE id=?"
-            );
+                    "UPDATE user SET name=?, last_name=?, email=? where id=?;");
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getEmail());
-            preparedStatement.setString(4, user.getPassword());
-            preparedStatement.setObject(5, user.getUserRole());
-            preparedStatement.setInt(6, user.getId());
+            preparedStatement.setInt(4, user.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+
     @Override
     public void delete(Integer id) {
-        connection = DBConnectionProvider.getInstance().getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM user WHERE id = ?");
             preparedStatement.setInt(1, id);
@@ -114,9 +107,9 @@ public class UserManagerImpl implements UserManager<Integer, User> {
         }
     }
 
+
     @Override
     public User getByEmailAndPassword(String email, String password) {
-        connection = DBConnectionProvider.getInstance().getConnection();
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user where email=? and password=?");
