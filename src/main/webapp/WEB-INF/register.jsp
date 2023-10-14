@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
 <html lang="en" dir="ltr">
@@ -26,6 +27,9 @@
         <span style="color: red"><%=request.getAttribute("passwordMatchError")%></span>
         <%}%>
 
+        <c:if test ="${not empty passwordMatchError}">
+            <span>${requestScope.passwordMatchError}</span>
+        </c:if>
         <div class="input-box">
             <input name="password" type="password" placeholder="Create password" required>
         </div>

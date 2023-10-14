@@ -55,23 +55,16 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>booklist</servlet-name>
-        <jsp-file>/WEB-INF/bookList.jsp</jsp-file>
+        <servlet-name>deleteUser</servlet-name>
+        <jsp-file>/WEB-INF/deleteUser.jsp</jsp-file>
     </servlet>
+
     <servlet-mapping>
-        <servlet-name>booklist</servlet-name>
-        <url-pattern>/books</url-pattern>
+        <servlet-name>deleteUser</servlet-name>
+        <url-pattern>/deleteUser</url-pattern>
     </servlet-mapping>
 
 
-<servlet>
-    <servlet-name>assignedbooks</servlet-name>
-    <jsp-file>/WEB-INF/assignedbooks.jsp</jsp-file>
-</servlet>
-    <servlet-mapping>
-        <servlet-name>assignedbooks</servlet-name>
-        <url-pattern>/assignedbooks</url-pattern>
-    </servlet-mapping>
 
 
     <error-page>

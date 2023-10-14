@@ -1,4 +1,5 @@
 <%@ page import="com.epam.library.model.User" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
 <html lang="en" dir="ltr">
@@ -13,24 +14,29 @@
     <h2>All books</h2>
     <br>
     <table>
-        <tr>
-            <td>book 1</td>
-            <td>Diana Melkonyan</td>
-            <td><a href="/">Unassign</a></td>
-        </tr>
-        <tr>
-            <td>book 2</td>
-            <td>Vika Simonyan</td>
-            <td><a href="/">Unassign</a></td>
-        </tr>
+        <c:forEach var="book" items="${sessionScope.assignedbooks}">
+            <tr>
+                <td>${book.bookName}</td>
+                <c:forEach var="user" items="${sessionScope.users}">
+                    <c:if test="${usr.id==book.userId}">
+                        <td>${user.name}</td>
+                        <td>${user.lastName}</td>
+                    </c:if>
+                </c:forEach>
+                <a href="/unAssignBook?bookId=${book.id}">Unassign</a>
+            </tr>
+        </c:forEach>
+        <c:if test="${not empty requestScope.unassignError}">
 
-        <tr>
-            <td>book3</td>
-            <td>MAX Simonyan</td>
-            <td><a href="/">Unassign</a></td>
-        </tr>
+            <span style="color: red">${requestScope.unassignError}</span>
+        </c:if>
+        <c:if test="${not empty requestScope.unassignSuccess}">
+
+            <span style="color: blueviolet">${requestScope.unassignSuccess}</span>
+        </c:if>
+
+
     </table>
-    <br>
     <a href="/">Login</a>
 </div>
 

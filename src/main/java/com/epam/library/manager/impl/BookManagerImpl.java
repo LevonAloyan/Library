@@ -116,7 +116,6 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM book where user_id is null");
             ResultSet resultSet = preparedStatement.executeQuery();
-
             while (resultSet.next()) {
                 Book book = new Book();
                 book.setId(resultSet.getInt("id"));
@@ -130,5 +129,24 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
             e.printStackTrace();
         }
         return books;
+    }
+
+    @Override
+    public List<Book> getAllAssignedBooks() {
+        List<Book> books =new ArrayList<>();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM book where user_id is NOT NULL");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+                Book book = new Book();
+                book.setId(resultSet.getInt("id"));
+                book.setBookName(resultSet.getString("book_name"));
+                book.setAuthorName(resultSet.getString("author_name"));
+                book.setUserId(resultSet.getInt("user_id"));
+                books.add(book);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }return books;
     }
 }

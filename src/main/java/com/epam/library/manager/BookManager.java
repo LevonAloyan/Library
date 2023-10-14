@@ -7,4 +7,5 @@ import java.util.List;
 public interface BookManager <I,E> extends Manager<Integer, Book> {
 
     List<E> getAllUnassignedBook();
+    List<E> getAllAssignedBooks();
 }
