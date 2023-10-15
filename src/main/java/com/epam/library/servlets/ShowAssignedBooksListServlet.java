@@ -11,7 +11,7 @@ import java.util.List;
 
 @WebServlet("/showAllAssignedBooks")
 
-public class ShowAssaigedBooksListServlet extends GenericServlet{
+public class ShowAssignedBooksListServlet extends GenericServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Book> assignedBooks =  bookManager.getAllAssignedBook();
