@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
 <html lang="en" dir="ltr">
@@ -20,11 +22,11 @@
         <div class="input-box">
             <input name="email" type="text" placeholder="Enter your email" required>
         </div>
-        <%
-            if (request.getAttribute("passwordMatchError") != null) {
-        %>
-        <span style="color: red"><%=request.getAttribute("passwordMatchError")%></span>
-        <%}%>
+
+        <c:if test="${requestScope.passwordMatchError != null}">
+            <span style="color: red"><c:out value="${requestScope.passwordMatchError}"/></span>
+
+        </c:if>
 
         <div class="input-box">
             <input name="password" type="password" placeholder="Create password" required>

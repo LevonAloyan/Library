@@ -1,5 +1,5 @@
-<%@ page import="java.util.List" %>
-<%@ page import="com.epam.library.model.Book" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
 <html lang="en" dir="ltr">
@@ -10,11 +10,6 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<%
-    List<Book> assignedBookList = (List<Book>) request.getAttribute("assignedBooks");
-
-
-%>
 <div class="wrapper">
     <h2>All assigned books</h2>
     <br>
@@ -24,24 +19,19 @@
             <th>Author name</th>
             <th>Unassign</th>
         </tr>
-        <% for (Book assaignedBook : assignedBookList) {
-        %>
-        <tr>
-            <td><%=assaignedBook.getBookName()%></td>
-            <td><%=assaignedBook.getAuthorName()%></td>
-            <td><a href="/unassignBook?bookId=<%=assaignedBook.getId()%>">Unassign</a></td>
-        <tr/>
-        <%}%>
+        <c:forEach var="assaignedBook" items="${assignedBooks}">
+            <tr>
+                <td>${assaignedBook.bookName}</td>
+                <td>${assaignedBook.authorName}</td>
+                <td><a href="/unassignBook?bookId=${assaignedBook.id}">Unassign</a></td>
+            <tr/>
+        </c:forEach>
     </table>
-
     <br>
     <br>
     <br>
     <br>
     <a href="/">Login</a>
-
 </div>
-
-
 </body>
 </html>

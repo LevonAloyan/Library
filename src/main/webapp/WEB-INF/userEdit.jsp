@@ -1,4 +1,3 @@
-<%@ page import="com.epam.library.model.User" %>
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
 <html lang="en" dir="ltr">
@@ -9,27 +8,24 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<%
-    User user = (User) request.getAttribute("user");
-%>
 <div class="wrapper">
     <h2>User Edit</h2>
     <form action="/editUser" method="post">
         <div class="selectedUser">
             <div class="input-box">
-                <input type="hidden" name="userId" value="<%=user.getId()%>">
+                <input type="hidden" name="userId" value="${user.id}">
             </div>
             <div class="input-box">
-            <input name="name" type="text" value="<%=user.getName()%>">
+                <input name="name" type="text" value="${user.name}">
             </div>
             <div class="input-box">
-                <input name="lastName" type="text" value="<%=user.getLastName()%>">
+                <input name="lastName" type="text" value="${user.lastName}">
             </div>
             <div class="input-box">
-                <input name="email" type="text" value="<%=user.getEmail()%>">
+                <input name="email" type="text" value="${user.email}">
             </div>
             <div class="input-box">
-                <input name="user_role" type="text" value="<%=user.getUserRole()%>">
+                <input name="user_role" type="text" value="${user.userRole}">
             </div>
         </div>
 

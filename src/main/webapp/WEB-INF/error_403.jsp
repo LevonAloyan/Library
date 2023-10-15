@@ -1,4 +1,3 @@
-<%@ page import="com.epam.library.model.User" %>
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
 <html lang="en" dir="ltr">
@@ -13,12 +12,5 @@
     <h2>ERROR 403 Forbidden</h2>
     <a href="/">Login</a>
 </div>
-
-<%--Select -> list of users--%>
-<%--Select ->  list of books--%>
-
-<%--button assign--%>
-
-
 </body>
 </html>

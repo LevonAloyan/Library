@@ -1,6 +1,4 @@
-<%@ page import="com.epam.library.model.User" %>
-<%@ page import="java.util.List" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -11,7 +9,6 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <title>Users</title>
-    <%List<User> userList = (List<User>) request.getAttribute("users"); %>
 </head>
 <body>
 <div class="wrapper">
@@ -23,14 +20,13 @@
             <th>Edit</th>
             <th>Delete</th>
         </tr>
-        <% for (User user : userList) {
-        %>
-        <tr>
-            <td><%=user.getName()%> <%=user.getLastName()%></td>
-            <td><a href="/editUser?userId=<%=user.getId()%>">Edit</a></td>
-            <td><a href="/deleteUser?userId=<%=user.getId()%>">Delete</a></td>
-        </tr>
-        <%}%>
+        <c:forEach var="user" items="${users}">
+            <tr>
+                <td>${user.name} ${user.lastName}</td>
+                <td><a href="/editUser?userId=${user.id}">Edit</a></td>
+                <td><a href="/deleteUser?userId=${user.id}">Delete</a></td>
+            </tr>
+        </c:forEach>
     </table>
 
     <br>

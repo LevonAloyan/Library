@@ -1,7 +1,6 @@
-<%@ page import="java.util.List" %>
-<%@ page import="com.epam.library.model.Book" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <head>
@@ -11,7 +10,6 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <title>Books</title>
-    <%List<Book> books = (List<Book>) request.getAttribute("books"); %>
 </head>
 <body>
 <div class="wrapper">
@@ -24,15 +22,15 @@
             <th>Edit</th>
             <th>Delete</th>
         </tr>
-        <% for (Book book : books) {
-        %>
-        <tr>
-            <td><%=book.getBookName()%></td>
-            <td> <%=book.getAuthorName()%></td>
-            <td><a href="/editBook?bookId=<%=book.getId()%>">Edit</a></td>
-            <td><a href="/deleteBook?bookId=<%=book.getId()%>">Delete</a></td>
-        </tr>
-        <%}%>
+
+        <c:forEach var="book" items="${books}">
+            <tr>
+                <td>${book.bookName}</td>
+                <td>${book.authorName}</td>
+                <td><a href="/editBook?bookId=${book.id}">Edit</a></td>
+                <td><a href="/deleteBook?bookId=${book.id}">Delete</a></td>
+            </tr>
+        </c:forEach>
     </table>
 
     <br>

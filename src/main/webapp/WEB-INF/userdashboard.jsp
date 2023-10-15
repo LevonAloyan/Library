@@ -1,4 +1,4 @@
-<%@ page import="com.epam.library.model.User" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
 <html lang="en" dir="ltr">
@@ -11,7 +11,7 @@
 <body>
 <div class="wrapper">
     <h2>Welcome</h2>
-    <%=((User)session.getAttribute("user")).getName()%>
+    <c:out value="${sessionScope.user.name}"/>
 </div>
 
 <%--List of all your book--%>
