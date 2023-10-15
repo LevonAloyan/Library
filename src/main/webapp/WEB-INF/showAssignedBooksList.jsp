@@ -17,19 +17,22 @@
 %>
 <div class="wrapper">
     <h2>All assigned books</h2>
-
-    <div class="input-box">
-
+    <br>
+    <table>
+        <tr>
+            <th>Book name</th>
+            <th>Author name</th>
+            <th>Unassign</th>
+        </tr>
         <% for (Book assaignedBook : assignedBookList) {
         %>
-        <option name="selectedBook" id="selectbook"
-                value="<%=assaignedBook.getId()%>"><%=assaignedBook.getBookName()%> <%=assaignedBook.getAuthorName()%>
-            <a href="/unassignBook?bookId=<%=assaignedBook.getId()%>">Unassign</a>
-
-        </option>
-
+        <tr>
+            <td><%=assaignedBook.getBookName()%></td>
+            <td><%=assaignedBook.getAuthorName()%></td>
+            <td><a href="/unassignBook?bookId=<%=assaignedBook.getId()%>">Unassign</a></td>
+        <tr/>
         <%}%>
-    </div>
+    </table>
 
     <br>
     <br>
