@@ -6,3 +6,12 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+/webContexts.xml
+/vcs.xml
+/misc.xml
+/Library.iml
+/jarRepositories.xml
+/dataSources.xml
+/aws.xml
+/sonarlint
+/artifacts
