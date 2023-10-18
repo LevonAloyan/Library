@@ -11,42 +11,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.epam.library.model.UserRole.ADMIN;
-import static com.epam.library.model.UserRole.USER;
-
 @WebServlet("/login")
-public class LoginServlet extends GenericServlet {
+public class LoginServlet extends HttpServlet {
 
-    private UserManager<Integer, User> userManager;
+    private final UserManager<Integer, User> userManager;
 
-    public LoginServlet (){
+    public LoginServlet() {
         userManager = new UserManagerImpl();
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("/login.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-
         User user = userManager.getByEmailAndPassword(email, password);
-        if (user != null){
+        if (user != null) {
             req.getSession().setAttribute("user", user);
-            if (user.getUserRole() == ADMIN){
-                resp.sendRedirect("/admin");
-//                req.getRequestDispatcher("/admin").forward(req, resp);
-            }else if (user.getUserRole() == USER) {
-                resp.sendRedirect("/dashboard");
-//                req.getRequestDispatcher("/dashboard").forward(req, resp);
-            }
-        }else {
-            req.setAttribute("loginError","The email and password you entered is not correct.");
+            resp.sendRedirect("/my-account");
+        } else {
+            req.setAttribute("loginError", "WrongCredentials");
             req.getRequestDispatcher("/").forward(req, resp);
         }
-
     }
-
-//    @Override
-//    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        super.doGet(req, resp);
-//    }
 }

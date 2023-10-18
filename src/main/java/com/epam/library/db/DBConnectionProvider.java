@@ -1,8 +1,9 @@
 package com.epam.library.db;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,7 +15,6 @@ public class DBConnectionProvider {
     private String username;
     private String password;
     private String dbDriverName;
-
     public static Connection connection;
     private volatile static DBConnectionProvider instance;
 
@@ -27,17 +27,6 @@ public class DBConnectionProvider {
         }
     }
 
-    private void loadProperties() throws IOException {
-        Properties properties = new Properties();
-        properties.load(new FileInputStream("/Users/Levon_Aloyan/IdeaProjects/Library/src/main/resources/db-config.properites"));
-
-        dbUrl = properties.getProperty("db.source.url");
-        username = properties.getProperty("db.source.username");
-        password = properties.getProperty("db.source.password");
-        dbDriverName = properties.getProperty("db.source.driverClass");
-
-    }
-
     public static DBConnectionProvider getInstance() {
         if (instance == null) {
             synchronized (DBConnectionProvider.class) {
@@ -47,7 +36,6 @@ public class DBConnectionProvider {
             }
         }
         return instance;
-
     }
 
     public Connection getConnection() {
@@ -59,5 +47,19 @@ public class DBConnectionProvider {
             e.printStackTrace();
         }
         return connection;
+    }
+
+    private void loadProperties() throws IOException {
+        Properties properties = new Properties();
+        String filePath = "/home/gspeyanhov/intellijProjectLinux/Library/src/main/resources/db-config.properties";
+        try (InputStream fileInputStream = Files.newInputStream(Paths.get(filePath))) {
+            properties.load(fileInputStream);
+            dbUrl = properties.getProperty("db.source.url");
+            username = properties.getProperty("db.source.username");
+            password = properties.getProperty("db.source.password");
+            dbDriverName = properties.getProperty("db.source.driverClass");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
