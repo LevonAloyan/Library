@@ -4,20 +4,20 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up form</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title> Sign Up form</title>
+    <link rel="stylesheet" href="style.css">
    </head>
 <body>
   <div class="wrapper">
     <h2>Sign Up</h2>
-    <form action="/login" method="post">
+    <form action="login" method="post">
       <%
-        if (request.getAttribute("loginError") != null) {
+        if(request.getAttribute("loginError")!=null){
       %>
-      <span style="color: red"><%=request.getAttribute("loginError")%></span>
+      <span style="color:red"><%=request.getAttribute("loginError")%></span>
       <%}%>
       <div class="input-box">
-        <input name="email" type="text" placeholder="Enter your email" required>
+        <input  name="email" type="text" placeholder="Enter your email" required>
       </div>
       <div class="input-box">
         <input name="password" type="password" placeholder="Create password" required>

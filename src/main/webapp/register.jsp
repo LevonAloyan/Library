@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Registration or Sign Up form in HTML CSS | CodingLab </title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="wrapper">
     <h2>Registration</h2>
-    <form action="/register" method="post">
+    <form action="Register" method="post">
         <div class="input-box">
             <input name="name" type="text" placeholder="Enter your name" required>
         </div>
@@ -23,7 +23,8 @@
         <%
             if (request.getAttribute("passwordMatchError") != null) {
         %>
-        <span style="color: red"><%=request.getAttribute("passwordMatchError")%></span>
+        <p style="color:red"><%=request.getAttribute("passwordMatchError")%>
+        </p>
         <%}%>
 
         <div class="input-box">

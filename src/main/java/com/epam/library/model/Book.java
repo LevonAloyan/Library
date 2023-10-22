@@ -1,11 +1,10 @@
 package com.epam.library.model;
 
 public class Book {
-
     private int id;
     private String bookName;
     private String authorName;
-    private int userId;
+    private int authorId;
 
     public int getId() {
         return id;
@@ -31,11 +30,11 @@ public class Book {
         this.authorName = authorName;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getAuthorId() {
+        return authorId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setAuthorId(int authorId) {
+        this.authorId = authorId;
     }
 }

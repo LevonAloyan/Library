@@ -2,15 +2,12 @@ package com.epam.library.manager;
 
 import java.util.List;
 
-public interface Manager<I, E> {
+public interface Manager <ID,ENTITY>{
 
-    E getById(I id);
+    ENTITY getById(ID id);
+    List<ENTITY> getAll();
+    void save(ENTITY entity);
+    void update(ID entity);
+    void delete(ID id);
 
-    List<E> getAll ();
-
-    void save(E entity);
-
-    void update(E entity);
-
-    void delete(I id);
 }

@@ -4,7 +4,30 @@ import com.epam.library.model.Book;
 
 import java.util.List;
 
-public interface BookManager <I,E> extends Manager<Integer, Book> {
+public class BookManager implements Manager<Integer, Book>{
 
-    List<E> getAllUnassignedBook();
+    @Override
+    public Book getById(Integer integer) {
+        return null;
+    }
+
+    @Override
+    public List<Book> getAll() {
+        return null;
+    }
+
+    @Override
+    public void save(Book book) {
+
+    }
+
+    @Override
+    public void update(Integer entity) {
+
+    }
+
+    @Override
+    public void delete(Integer integer) {
+
+    }
 }
