@@ -1,4 +1,4 @@
-package com.epam.library.servlets;
+package com.epam.library.servlet;
 
 import com.epam.library.model.User;
 
@@ -9,13 +9,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/users")
-public class UsersServlet extends GenericServlet{
-
+@WebServlet("/usersServlet")
+public class UsersServlet extends GenericServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<User> users = userManager.getAll();
-        req.setAttribute("users",users);
-        req.getRequestDispatcher("/usersPage").forward(req, resp);
+        List<User> allUsers = userManager.getAll();
+        req.setAttribute("allUsers",allUsers);
+        req.getRequestDispatcher("/usersPage").forward(req,resp);
     }
 }

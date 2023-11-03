@@ -1,4 +1,4 @@
-package com.epam.library.servlets;
+package com.epam.library.servlet;
 
 import com.epam.library.manager.BookManager;
 import com.epam.library.manager.UserManager;
@@ -10,7 +10,6 @@ import com.epam.library.model.User;
 import javax.servlet.http.HttpServlet;
 
 public class GenericServlet extends HttpServlet {
-
     protected UserManager<Integer, User> userManager;
     protected BookManager<Integer, Book> bookManager;
 

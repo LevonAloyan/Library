@@ -1,4 +1,4 @@
-package com.epam.library.servlets;
+package com.epam.library.servlet;
 
 import com.epam.library.manager.UserManager;
 import com.epam.library.manager.impl.UserManagerImpl;
@@ -11,26 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/register")
+@WebServlet("/Register")
 public class RegisterServlet extends GenericServlet {
-
-    private UserManager<Integer,User> userManager;
-
-    public RegisterServlet (){
-        userManager = new UserManagerImpl();
-    }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         String name = req.getParameter("name");
         String lastName = req.getParameter("lastName");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String confirmPassword = req.getParameter("confirmPassword");
 
-        if (!password.equals(confirmPassword)){
-            req.setAttribute("passwordMatchError","Password did not match with confirm password");
+        if (!password.equals(confirmPassword)) {
+            req.setAttribute("passwordMatchError", "Password did not match with confirm password");
             req.getRequestDispatcher("/registerPage").forward(req, resp);
             return;
         }
@@ -38,13 +31,13 @@ public class RegisterServlet extends GenericServlet {
         User user = new User();
         user.setName(name);
         user.setLastName(lastName);
-        user.setEmail(email);
         user.setPassword(password);
+        user.setEmail(email);
         user.setConfirmPassword(confirmPassword);
 
         userManager.save(user);
 
         req.getRequestDispatcher("/").forward(req,resp);
-
     }
+
 }

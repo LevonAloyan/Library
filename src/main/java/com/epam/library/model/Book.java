@@ -1,7 +1,6 @@
 package com.epam.library.model;
 
 public class Book {
-
     private int id;
     private String bookName;
     private String authorName;

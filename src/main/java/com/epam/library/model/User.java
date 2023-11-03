@@ -1,14 +1,13 @@
 package com.epam.library.model;
 
 public class User {
-
     private int id;
     private String name;
     private String lastName;
     private String email;
     private String password;
     private String confirmPassword;
-    private UserRole userRole;
+    private UserRole role;
 
     public int getId() {
         return id;
@@ -50,19 +49,19 @@ public class User {
         this.password = password;
     }
 
-    public UserRole getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(UserRole userRole) {
-        this.userRole = userRole;
-    }
-
     public String getConfirmPassword() {
         return confirmPassword;
     }
 
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }
