@@ -1,5 +1,7 @@
 package com.epam.library.db;
 
+import org.springframework.stereotype.Component;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+@Component("DBConnectionProvider")
 public class DBConnectionProvider {
 
     private String dbUrl;
@@ -16,7 +19,7 @@ public class DBConnectionProvider {
     private String dbDriverName;
 
     public static Connection connection;
-    private volatile static DBConnectionProvider instance;
+//    private volatile static DBConnectionProvider instance;
 
     private DBConnectionProvider() {
         try {
@@ -37,18 +40,18 @@ public class DBConnectionProvider {
 
     }
 
-    public static DBConnectionProvider getInstance() {
-        if (instance == null) {
-            synchronized (DBConnectionProvider.class) {
-                if (instance == null) {
-                    instance = new DBConnectionProvider();
-                }
-            }
-        }
-        return instance;
-
-    }
-
+//    public static DBConnectionProvider getInstance() {
+//        if (instance == null) {
+//            synchronized (DBConnectionProvider.class) {
+//                if (instance == null) {
+//                    instance = new DBConnectionProvider();
+//                }
+//            }
+//        }
+//        return instance;
+//
+//    }
+//
     public Connection getConnection() {
         try {
             if (connection == null || connection.isClosed()) {

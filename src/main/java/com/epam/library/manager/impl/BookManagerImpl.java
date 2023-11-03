@@ -3,6 +3,9 @@ package com.epam.library.manager.impl;
 import com.epam.library.db.DBConnectionProvider;
 import com.epam.library.manager.BookManager;
 import com.epam.library.model.Book;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,13 +14,17 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component("bookManager")
 public class BookManagerImpl implements BookManager<Integer, Book> {
 
     private Connection connection;
 
     @Override
     public Book getById(Integer id) {
-        connection = DBConnectionProvider.getInstance().getConnection();
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
+
+        connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM books where id=?");
             preparedStatement.setInt(1, id);
@@ -40,7 +47,10 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public List<Book> getAll() {
-        connection = DBConnectionProvider.getInstance().getConnection();
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
+
+        connection = dbConnectionProvider.getConnection();
         List<Book> books = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM books");
@@ -64,7 +74,10 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public void save(Book book) {
-        connection = DBConnectionProvider.getInstance().getConnection();
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
+
+        connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO books(book_name, author_name, user_id) VALUES(?,?,?)");
             preparedStatement.setString(1, book.getBookName());
@@ -80,14 +93,17 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
     @Override
     public void update(Book book) {
         if (book != null) {
-            connection = DBConnectionProvider.getInstance().getConnection();
+            ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+            DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
+
+            connection = dbConnectionProvider.getConnection();
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(
                         "UPDATE books SET book_name=?, author_name=?, user_id=? WHERE id=?"
                 );
                 preparedStatement.setString(1, book.getBookName());
                 preparedStatement.setString(2, book.getAuthorName());
-                if (book.getUserId()==0){
+                if (book.getUserId() == 0) {
                     preparedStatement.setNull(3, book.getUserId());
                 } else {
                     preparedStatement.setInt(3, book.getUserId());
@@ -102,7 +118,10 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public void delete(Integer id) {
-        connection = DBConnectionProvider.getInstance().getConnection();
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
+
+        connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM books where id=?;");
             preparedStatement.setInt(1, id);
@@ -115,7 +134,10 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
     }
 
     public void unassign(Book book) {
-        connection = DBConnectionProvider.getInstance().getConnection();
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
+
+        connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("UPDATE books SET user_id = NULL WHERE id = ?;");
             statement.setInt(1, book.getId());
@@ -127,7 +149,10 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public List<Book> getAllUnassignedBook() {
-        connection = DBConnectionProvider.getInstance().getConnection();
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
+
+        connection = dbConnectionProvider.getConnection();
         List<Book> books = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM books where user_id is null");
@@ -150,7 +175,10 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public List<Book> getAllAssignedBook() {
-        connection = DBConnectionProvider.getInstance().getConnection();
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
+
+        connection = dbConnectionProvider.getConnection();
         List<Book> books = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM books where user_id is not null");
