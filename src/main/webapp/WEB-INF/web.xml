@@ -28,5 +28,45 @@
     <url-pattern>/dashboard</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>adminPage</servlet-name>
+    <jsp-file>/admin.jsp</jsp-file>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>adminPage</servlet-name>
+    <url-pattern>/adminPage</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>usersPage</servlet-name>
+    <jsp-file>/usersList.jsp</jsp-file>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>usersPage</servlet-name>
+    <url-pattern>/usersPage</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>error403</servlet-name>
+    <jsp-file>/error_403.jsp</jsp-file>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>error403</servlet-name>
+    <url-pattern>/error403</url-pattern>
+  </servlet-mapping>
+
+  <error-page>
+    <location>/error_404.jsp</location>
+    <error-code>404</error-code>
+  </error-page>
+
+  <error-page>
+    <location>/error_403.jsp</location>
+    <error-code>403</error-code>
+  </error-page>
+
 
 </web-app>

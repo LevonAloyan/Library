@@ -7,7 +7,7 @@ public interface Manager <ID,ENTITY>{
     ENTITY getById(ID id);
     List<ENTITY> getAll();
     void save(ENTITY entity);
-    void update(ID entity);
+    void update(ENTITY entity);
     void delete(ID id);
 
 }

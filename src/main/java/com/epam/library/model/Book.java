@@ -4,7 +4,7 @@ public class Book {
     private int id;
     private String bookName;
     private String authorName;
-    private int authorId;
+    private int userId;
 
     public int getId() {
         return id;
@@ -30,11 +30,11 @@ public class Book {
         this.authorName = authorName;
     }
 
-    public int getAuthorId() {
-        return authorId;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }
