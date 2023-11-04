@@ -1,3 +1,5 @@
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
 
@@ -9,14 +11,14 @@
     <link rel="stylesheet" href="css/style.css">
    </head>
 <body>
+<c:set var="loginError" value="${requestScope.loginError}"/>
   <div class="wrapper">
     <h2>Sign Up</h2>
     <form action="/login" method="post">
-      <%
-        if (request.getAttribute("loginError") != null) {
-      %>
-      <span style="color: red"><%=request.getAttribute("loginError")%></span>
-      <%}%>
+    <c:if test="${not empty loginError}">
+
+      <span style="color: red">${loginError}</span>
+    </c:if>
       <div class="input-box">
         <input name="email" type="text" placeholder="Enter your email" required>
       </div>
