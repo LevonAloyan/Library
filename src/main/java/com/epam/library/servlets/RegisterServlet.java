@@ -13,12 +13,6 @@ import java.io.IOException;
 @WebServlet("/register")
 public class RegisterServlet extends GenericServlet {
 
-    private UserManager<Integer,User> userManager;
-
-    public RegisterServlet (){
-        userManager = new UserManagerImpl();
-    }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 

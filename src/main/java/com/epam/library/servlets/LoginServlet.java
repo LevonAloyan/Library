@@ -18,13 +18,6 @@ import static com.epam.library.model.UserRole.USER;
 @WebServlet("/login")
 public class LoginServlet extends GenericServlet {
 
-    private UserManager<Integer, User> userManager;
-
-    public LoginServlet (){
-        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        userManager = context.getBean("userManager", UserManagerImpl.class);
-    }
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
