@@ -5,6 +5,10 @@ import com.epam.library.manager.UserManager;
 import com.epam.library.model.Book;
 import com.epam.library.model.User;
 import com.epam.library.model.UserRole;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,13 +17,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Component("userManager")
+@Repository
 public class UserManagerImpl implements UserManager<Integer, User> {
 
-    private final Connection connection = DBConnectionProvider.getInstance().getConnection();
+    @Autowired
+    @Qualifier("dbConnectionProvider")
+    private DBConnectionProvider dbConnectionProvider;
+    private Connection connection;
 
 
     @Override
     public User getById(Integer id) {
+        connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user where id=?");
             preparedStatement.setInt(1, id);
@@ -44,6 +55,7 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public List<User> getAll() {
+        connection = dbConnectionProvider.getConnection();
         List<User> users = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user");
@@ -67,6 +79,7 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public void save(User user) {
+        connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user(name, last_name, email, password) VALUES(?,?,?,?)");
             preparedStatement.setString(1, user.getName());
@@ -82,6 +95,7 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public void update(User user) {
+        connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(
                     "UPDATE user SET name=?, last_name=?, email=? where id=?;");
@@ -110,7 +124,7 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public User getByEmailAndPassword(String email, String password) {
-
+        connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user where email=? and password=?");
             preparedStatement.setString(1, email);
@@ -131,5 +145,11 @@ public class UserManagerImpl implements UserManager<Integer, User> {
         return null;
     }
 
+    public UserManagerImpl(DBConnectionProvider dbConnectionProvider) {
+        this.dbConnectionProvider = dbConnectionProvider;
+    }
 
+    public void setDbConnectionProvider(DBConnectionProvider dbConnectionProvider) {
+        this.dbConnectionProvider = dbConnectionProvider;
+    }
 }

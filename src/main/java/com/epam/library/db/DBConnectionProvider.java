@@ -1,5 +1,7 @@
 package com.epam.library.db;
 
+import org.springframework.stereotype.Component;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+
+@Component("dbConnectionProvider")
 public class DBConnectionProvider {
 
     private String dbUrl;

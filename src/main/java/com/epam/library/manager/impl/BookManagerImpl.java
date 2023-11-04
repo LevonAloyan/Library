@@ -3,6 +3,10 @@ package com.epam.library.manager.impl;
 import com.epam.library.db.DBConnectionProvider;
 import com.epam.library.manager.BookManager;
 import com.epam.library.model.Book;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,12 +15,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component("bookManager")
+@Repository
 public class BookManagerImpl implements BookManager<Integer, Book> {
 
-    private final Connection connection = DBConnectionProvider.getInstance().getConnection();
+    @Autowired
+    @Qualifier("dbConnectionProvider")
+    private DBConnectionProvider dbConnectionProvider;
+    private  Connection connection;
 
     @Override
     public Book getById(Integer id) {
+        connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM book where id=?");
             preparedStatement.setInt(1, id);
@@ -39,6 +49,7 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public List<Book> getAll() {
+        connection = dbConnectionProvider.getConnection();
         List<Book> books = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM book");
@@ -62,6 +73,7 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public void save(Book book) {
+        connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO book(book_name, author_name, user_id) VALUES(?,?,?)");
             preparedStatement.setString(1, book.getBookName());
@@ -76,6 +88,7 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public void update(Book book) {
+        connection = dbConnectionProvider.getConnection();
         if (book != null) {
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(
@@ -94,6 +107,7 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public void delete(Integer id) {
+        connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM book WHERE id = ?");
             preparedStatement.setInt(1, id);
@@ -106,6 +120,7 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public List<Book> getAllUnassignedBooks() {
+        connection = dbConnectionProvider.getConnection();
         List<Book> books = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM book where user_id is null");
@@ -128,6 +143,7 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public List<Book> getAllAssignedBooks() {
+        connection = dbConnectionProvider.getConnection();
         List<Book>books = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM book where user_id is NOT NULL");

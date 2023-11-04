@@ -1,5 +1,9 @@
 package com.epam.library.model;
 
+
+import org.springframework.stereotype.Component;
+
+@Component
 public class Book {
 
     private int id;
