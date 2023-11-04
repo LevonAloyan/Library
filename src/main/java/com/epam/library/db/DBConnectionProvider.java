@@ -1,5 +1,7 @@
 package com.epam.library.db;
 
+import org.springframework.stereotype.Component;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+@Component("dbConnectionProvider")
 public class DBConnectionProvider {
 
     private String dbUrl;
@@ -29,12 +32,18 @@ public class DBConnectionProvider {
 
     private void loadProperties() throws IOException {
         Properties properties = new Properties();
-        properties.load(new FileInputStream("C:\\Users\\37455\\Desktop\\Library\\src\\main\\resources\\db-config.properites"));
+        properties.load(new FileInputStream("C:\\Users\\37455\\OneDrive\\Desktop\\Library\\src\\main\\resources\\db-config.properites"));
 
         dbUrl = properties.getProperty("db.source.url");
         username = properties.getProperty("db.source.username");
         password = properties.getProperty("db.source.password");
         dbDriverName = properties.getProperty("db.source.driverClass");
+
+//        properties.load(new FileInputStream("C:\\Users\\37455\\OneDrive\\Desktop\\Library\\src\\main\\resources\\h2-config.properites"));
+//        dbUrl = properties.getProperty("spring.datasource.url");
+//        username = properties.getProperty("spring.datasource.username");
+//        password = properties.getProperty("spring.datasource.password");
+//        dbDriverName = properties.getProperty("spring.datasource.driverClassName");
 
     }
 

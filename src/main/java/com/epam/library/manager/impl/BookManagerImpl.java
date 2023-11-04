@@ -3,6 +3,9 @@ package com.epam.library.manager.impl;
 import com.epam.library.db.DBConnectionProvider;
 import com.epam.library.manager.BookManager;
 import com.epam.library.model.Book;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,9 +13,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+@Component("bookManager")
 public class BookManagerImpl implements BookManager<Integer, Book> {
+    @Autowired
 
+    private DBConnectionProvider dbConnectionProvider;
     private Connection connection;
 
     @Override

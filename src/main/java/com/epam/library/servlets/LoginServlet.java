@@ -3,6 +3,10 @@ package com.epam.library.servlets;
 import com.epam.library.manager.UserManager;
 import com.epam.library.manager.impl.UserManagerImpl;
 import com.epam.library.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,14 +17,16 @@ import java.io.IOException;
 
 import static com.epam.library.model.UserRole.ADMIN;
 import static com.epam.library.model.UserRole.USER;
-
+@Component("loginServlet")
 @WebServlet("/login")
 public class LoginServlet extends GenericServlet {
 
     private UserManager<Integer, User> userManager;
 
     public LoginServlet (){
-        userManager = new UserManagerImpl();
+        ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
+       userManager=context.getBean("userManager", UserManagerImpl.class);
+
     }
 
     @Override

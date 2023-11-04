@@ -5,6 +5,9 @@ import com.epam.library.manager.UserManager;
 import com.epam.library.model.Book;
 import com.epam.library.model.User;
 import com.epam.library.model.UserRole;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,9 +15,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
+@Component("userManager")
 public class UserManagerImpl implements UserManager<Integer, User> {
-
+@Autowired
+@Qualifier("dbConnectionProvider")
+    private DBConnectionProvider dbConnectionProvider;
     private Connection connection;
 
 
@@ -134,5 +139,13 @@ public class UserManagerImpl implements UserManager<Integer, User> {
             throw new RuntimeException(String.format("Given user with email: %s and password %s not found", email, password));
         }
         return null;
+    }
+
+    public DBConnectionProvider getDbConnectionProvider() {
+        return dbConnectionProvider;
+    }
+
+    public void setDbConnectionProvider(DBConnectionProvider dbConnectionProvider) {
+        this.dbConnectionProvider = dbConnectionProvider;
     }
 }
