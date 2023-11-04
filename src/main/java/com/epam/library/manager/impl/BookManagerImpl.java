@@ -3,8 +3,7 @@ package com.epam.library.manager.impl;
 import com.epam.library.db.DBConnectionProvider;
 import com.epam.library.manager.BookManager;
 import com.epam.library.model.Book;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -16,14 +15,13 @@ import java.util.List;
 
 @Component("bookManager")
 public class BookManagerImpl implements BookManager<Integer, Book> {
+    @Autowired
+    private DBConnectionProvider dbConnectionProvider;
 
     private Connection connection;
 
     @Override
     public Book getById(Integer id) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
-
         connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM books where id=?");
@@ -47,9 +45,6 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public List<Book> getAll() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
-
         connection = dbConnectionProvider.getConnection();
         List<Book> books = new ArrayList<>();
         try {
@@ -74,9 +69,6 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public void save(Book book) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
-
         connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO books(book_name, author_name, user_id) VALUES(?,?,?)");
@@ -93,9 +85,6 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
     @Override
     public void update(Book book) {
         if (book != null) {
-            ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-            DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
-
             connection = dbConnectionProvider.getConnection();
             try {
                 PreparedStatement preparedStatement = connection.prepareStatement(
@@ -118,9 +107,6 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public void delete(Integer id) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
-
         connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM books where id=?;");
@@ -134,9 +120,6 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
     }
 
     public void unassign(Book book) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
-
         connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement statement = connection.prepareStatement("UPDATE books SET user_id = NULL WHERE id = ?;");
@@ -149,9 +132,6 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public List<Book> getAllUnassignedBook() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
-
         connection = dbConnectionProvider.getConnection();
         List<Book> books = new ArrayList<>();
         try {
@@ -175,9 +155,6 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
 
     @Override
     public List<Book> getAllAssignedBook() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
-
         connection = dbConnectionProvider.getConnection();
         List<Book> books = new ArrayList<>();
         try {

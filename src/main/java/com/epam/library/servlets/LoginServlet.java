@@ -3,6 +3,8 @@ package com.epam.library.servlets;
 import com.epam.library.manager.UserManager;
 import com.epam.library.manager.impl.UserManagerImpl;
 import com.epam.library.model.User;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +21,8 @@ public class LoginServlet extends GenericServlet {
     private UserManager<Integer, User> userManager;
 
     public LoginServlet (){
-        userManager = new UserManagerImpl();
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        userManager = context.getBean("userManager", UserManagerImpl.class);
     }
 
     @Override
@@ -41,7 +44,6 @@ public class LoginServlet extends GenericServlet {
             req.setAttribute("loginError","The email and password you entered is not correct.");
             req.getRequestDispatcher("/").forward(req, resp);
         }
-
     }
 
     @Override

@@ -1,12 +1,9 @@
 package com.epam.library.manager.impl;
-
 import com.epam.library.db.DBConnectionProvider;
 import com.epam.library.manager.UserManager;
-import com.epam.library.model.Book;
 import com.epam.library.model.User;
 import com.epam.library.model.UserRole;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -20,12 +17,12 @@ import java.util.List;
 public class UserManagerImpl implements UserManager<Integer, User> {
 
     private Connection connection;
+    @Autowired
+    private DBConnectionProvider dbConnectionProvider;
 
 
     @Override
     public User getById(Integer id) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
         connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users where id=?");
@@ -51,9 +48,8 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public List<User> getAll() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
-        connection = dbConnectionProvider.getConnection();        List<User> users = new ArrayList<>();
+        connection = dbConnectionProvider.getConnection();
+        List<User> users = new ArrayList<>();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users");
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -76,8 +72,6 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public void save(User user) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
         connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users(name, last_name, email, password) VALUES(?,?,?,?)");
@@ -94,8 +88,6 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public void update(User user) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
         connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users SET name=?, last_name=?, email=? where id=?;");
@@ -113,8 +105,6 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public void delete(Integer id) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
         connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM users where id=?;");
@@ -129,8 +119,6 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public User getByEmailAndPassword(String email, String password) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
-        DBConnectionProvider dbConnectionProvider = context.getBean("DBConnectionProvider", DBConnectionProvider.class);
         connection = dbConnectionProvider.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users where email=? and password=?");
