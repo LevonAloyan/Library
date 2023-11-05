@@ -2,7 +2,9 @@ package com.epam.library.servlets;
 
 import com.epam.library.manager.UserManager;
 import com.epam.library.manager.impl.UserManagerImpl;
-import com.epam.library.model.User;
+import com.epam.library.model.Users;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,11 +16,13 @@ import java.io.IOException;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 
-    private UserManager<Integer, User> userManager;
+    private UserManager<Integer, Users> userManager;
 
-    public LoginServlet (){
-        userManager = new UserManagerImpl();
+    public LoginServlet() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        userManager = context.getBean("userManager", UserManagerImpl.class);
     }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
@@ -29,12 +33,12 @@ public class LoginServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
-        User user = userManager.getByEmailAndPassword(email, password);
-        if (user != null){
+        Users user = userManager.getByEmailAndPassword(email, password);
+        if (user != null) {
             req.getSession().setAttribute("user", user);
             resp.sendRedirect("/my-account");
-        }else {
-            req.setAttribute("loginError","The email and password you entered is not correct.");
+        } else {
+            req.setAttribute("loginError", "The email and password you entered is not correct.");
             req.getRequestDispatcher("/").forward(req, resp);
         }
 

@@ -1,6 +1,6 @@
 package com.epam.library.servlets;
 
-import com.epam.library.model.User;
+import com.epam.library.model.Users;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +14,7 @@ public class EditUserServlet extends GenericServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int userId = Integer.parseInt(req.getParameter("userId"));
-        User user = userManager.getById(userId);
+        Users user = userManager.getById(userId);
         req.setAttribute("user", user);
         req.getRequestDispatcher("/WEB-INF/editUser.jsp").forward(req, resp);
     }
@@ -27,7 +27,7 @@ public class EditUserServlet extends GenericServlet {
         String surname = req.getParameter("lastName");
         String email = req.getParameter("email");
 
-        User user = User.builder()
+        Users user = Users.builder()
                 .id(userId)
                 .name(name)
                 .lastName(surname)

@@ -1,4 +1,4 @@
-<%@ page import="com.epam.library.model.User" %>
+<%@ page import="com.epam.library.model.Users" %>
 <!DOCTYPE html>
 <!-- Coding by CodingLab | www.codinglabweb.com-->
 <html lang="en" dir="ltr">

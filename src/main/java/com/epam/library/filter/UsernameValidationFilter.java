@@ -2,7 +2,12 @@ package com.epam.library.filter;
 
 
 import com.epam.library.manager.UserManager;
+import com.epam.library.manager.impl.BookManagerImpl;
 import com.epam.library.manager.impl.UserManagerImpl;
+import com.epam.library.model.Users;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -15,7 +20,14 @@ import java.util.regex.Pattern;
 
 @WebFilter(value = "/register")
 public class UsernameValidationFilter implements Filter {
-    private UserManager userManager = new UserManagerImpl();
+
+    private UserManagerImpl userManager;
+    public UsernameValidationFilter() {
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        userManager = context.getBean("userManager", UserManagerImpl.class);
+    }
+
+
     private static final String EMAIL_PATTERN =
             "^[A-Za-z0-9+_.-]+@(.+)$";
     private static final Pattern pattern = Pattern.compile(EMAIL_PATTERN);

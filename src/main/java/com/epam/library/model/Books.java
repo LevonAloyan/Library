@@ -1,6 +1,5 @@
 package com.epam.library.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,14 +9,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @NoArgsConstructor
-public class User {
+public class Books {
 
     private int id;
-    private String name;
-    private String lastName;
-    private String email;
-    private String password;
-    private String confirmPassword;
-    private UserRole userRole;
+    private String bookName;
+    private String authorName;
+    private int userId;
 
 }

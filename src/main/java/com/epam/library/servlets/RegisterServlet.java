@@ -2,8 +2,10 @@ package com.epam.library.servlets;
 
 import com.epam.library.manager.UserManager;
 import com.epam.library.manager.impl.UserManagerImpl;
-import com.epam.library.model.User;
 import com.epam.library.model.UserRole;
+import com.epam.library.model.Users;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,10 +16,11 @@ import java.io.IOException;
 @WebServlet("/register")
 public class RegisterServlet extends GenericServlet {
 
-    private UserManager<Integer, User> userManager;
+    private UserManager<Integer, Users> userManager;
 
     public RegisterServlet() {
-        userManager = new UserManagerImpl();
+        ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+        userManager = context.getBean("userManager", UserManagerImpl.class);
     }
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,7 +42,7 @@ public class RegisterServlet extends GenericServlet {
             return;
         }
 
-        User user = User.builder()
+        Users user= Users.builder()
                 .name(name)
                 .lastName(lastName)
                 .email(email)

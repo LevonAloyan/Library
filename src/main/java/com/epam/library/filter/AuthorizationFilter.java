@@ -1,7 +1,7 @@
 package com.epam.library.filter;
 
-import com.epam.library.model.User;
 import com.epam.library.model.UserRole;
+import com.epam.library.model.Users;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -16,7 +16,7 @@ public class AuthorizationFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
-        User user = (User) req.getSession().getAttribute("user");
+        Users user = (Users) req.getSession().getAttribute("user");
 
         if (user.getUserRole().equals(UserRole.USER)) {
             req.getRequestDispatcher("/WEB-INF/userDashboard.jsp").forward(req, resp);

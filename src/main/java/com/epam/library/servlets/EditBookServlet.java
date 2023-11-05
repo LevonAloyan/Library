@@ -1,7 +1,8 @@
 package com.epam.library.servlets;
 
 
-import com.epam.library.model.Book;
+
+import com.epam.library.model.Books;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,7 +15,7 @@ public class EditBookServlet extends GenericServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int bookId = Integer.parseInt(req.getParameter("bookId"));
-        Book book = bookManager.getById(bookId);
+        Books book = bookManager.getById(bookId);
         req.setAttribute("book", book);
         req.getRequestDispatcher("/WEB-INF/editBook.jsp").forward(req, resp);
     }
@@ -24,7 +25,7 @@ public class EditBookServlet extends GenericServlet {
         String bookName = req.getParameter("bookName");
         String authorName = req.getParameter("authorName");
         
-        Book event = Book.builder()
+        Books event = Books.builder()
                 .bookName(bookName)
                 .authorName(authorName)
                 .build();

@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.epam.library.model.User" %>
+<%@ page import="com.epam.library.model.Users" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Noname

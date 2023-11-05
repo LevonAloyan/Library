@@ -17,6 +17,17 @@
           <element id="library" level="project" name="Maven: com.mysql:mysql-connector-j:8.0.32" />
           <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.21.9" />
           <element id="library" level="project" name="Maven: jstl:jstl:1.2" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-core:6.0.13" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jcl:6.0.13" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:6.0.13" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:6.0.13" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-expression:6.0.13" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:6.0.13" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:6.0.13" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-beans:6.0.13" />
+          <element id="library" level="project" name="Maven: jakarta.annotation:jakarta.annotation-api:2.1.1" />
+          <element id="library" level="project" name="Maven: jakarta.inject:jakarta.inject-api:2.0.1" />
+          <element id="library" level="project" name="Maven: com.h2database:h2:2.1.214" />
         </element>
       </element>
       <element id="directory" name="META-INF">

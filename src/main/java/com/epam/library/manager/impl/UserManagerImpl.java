@@ -1,27 +1,58 @@
 package com.epam.library.manager.impl;
 
-import com.epam.library.db.DBConnectionProvider;
+import com.epam.library.db.DBProvider;
 import com.epam.library.manager.UserManager;
-import com.epam.library.model.User;
 import com.epam.library.model.UserRole;
+import com.epam.library.model.Users;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public class UserManagerImpl implements UserManager<Integer, User> {
+@Component("userManager")
+public class UserManagerImpl implements UserManager<Integer, Users> {
 
-    private Connection connection = DBConnectionProvider.getInstance().getConnection();
+    private final DBProvider dbProvider;
+
+    public UserManagerImpl(DBProvider dbProvider) {
+        this.dbProvider = dbProvider;
+    }
+
+    @Override
+    public void save(Users user) {
+        try (Connection connection = dbProvider.dataSource().getConnection()) {
+            if (!userTableExists(connection, "users")) {
+                createUsersTable(connection);
+            }
+            String sql = "INSERT INTO users (name, last_name, email, password, user_role) VALUES (?, ?, ?, ?, ?)";
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setString(1, user.getName());
+                ps.setString(2, user.getLastName());
+                ps.setString(3, user.getEmail());
+                ps.setString(4, user.getPassword());
+                ps.setString(5, UserRole.ADMIN.toString());
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
     @Override
-    public User getById(Integer id) {
-        String sql = "SELECT * FROM user  WHERE id = " + id;
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ResultSet resultSet = ps.executeQuery();
-            if (resultSet.next()) {
-                return getUserFromResulSet(resultSet);
+    public Users getById(Integer id) {
+        String sql = "SELECT * FROM users WHERE id = ?";
+        try (Connection connection = dbProvider.dataSource().getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            try (ResultSet resultSet = ps.executeQuery()) {
+                if (resultSet.next()) {
+                    return getUserFromResulSet(resultSet);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -30,14 +61,17 @@ public class UserManagerImpl implements UserManager<Integer, User> {
     }
 
     @Override
-    public List<User> getAll() {
-        String sql = "SELECT * FROM  user where user_role = 'USER'";
-        List<User> users = new LinkedList<>();
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ResultSet resultSet = ps.executeQuery(sql);
+    public List<Users> getAll() {
+        String sql = "SELECT * FROM users";
+        List<Users> users = new LinkedList<>();
+        try (Connection connection = dbProvider.dataSource().getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql);
+             ResultSet resultSet = ps.executeQuery()) {
             while (resultSet.next()) {
-                users.add(getUserFromResulSet(resultSet));
+                Users user = getUserFromResulSet(resultSet);
+                if (user != null) {
+                    users.add(user);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -45,26 +79,12 @@ public class UserManagerImpl implements UserManager<Integer, User> {
         return users;
     }
 
-    @Override
-    public void save(User user) {
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO user(name, last_name, email, password, user_role) VALUES(?,?,?,?,?)");
-            preparedStatement.setString(1, user.getName());
-            preparedStatement.setString(2, user.getLastName());
-            preparedStatement.setString(3, user.getEmail());
-            preparedStatement.setString(4, user.getPassword());
-            preparedStatement.setString(5, UserRole.USER.toString());
-            int execute = preparedStatement.executeUpdate();
-            System.out.println(execute);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
-    public void update(User user) {
-        String sql = "Update user set name = ?,last_name = ?,email = ? WHERE id = ?";
+    public void update(Users user) {
+        String sql = "Update users set name = ?,last_name = ?,email = ? WHERE id = ?";
         try {
+            Connection connection = dbProvider.dataSource().getConnection();
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, user.getName());
             ps.setString(2, user.getLastName());
@@ -80,42 +100,45 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public void delete(Integer id) {
-        String sql = "DELETE FROM user WHERE id = " + id;
+        String sql = "DELETE FROM users WHERE id = " + id;
         try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
+            Connection connection = dbProvider.dataSource().getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public User getByEmailAndPassword(String email, String password) {
+    public Users getByEmailAndPassword(String email, String password) {
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM user where email=? and password=?");
-            preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
-            ResultSet rs = preparedStatement.executeQuery();
+            Connection connection = dbProvider.dataSource().getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM users where email=? and password=?");
+            ps.setString(1, email);
+            ps.setString(2, password);
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return getUserFromResulSet(rs);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(String.format("Given user with email: %s and password %s not found", email, password));
+            e.printStackTrace();
         }
         return null;
     }
 
     @Override
-    public User getByEmail(String email) {
-        String sql = "SELECT * FROM user WHERE email = ?";
+    public Users getByEmail(String email) {
+        String sql = "SELECT * FROM users WHERE email = ?";
         try {
+            Connection connection = dbProvider.dataSource().getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return getUserFromResulSet(rs);
             } else {
-                System.out.println("No user found with email: " + email);
+                System.out.println("No User found with email: " + email);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -125,8 +148,9 @@ public class UserManagerImpl implements UserManager<Integer, User> {
 
     @Override
     public void removeById(Integer userId) {
-        String sql = "delete from user where id = " + userId;
+        String sql = "delete from users where id = " + userId;
         try {
+            Connection connection = dbProvider.dataSource().getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.executeUpdate(sql);
         } catch (SQLException e) {
@@ -134,8 +158,28 @@ public class UserManagerImpl implements UserManager<Integer, User> {
         }
     }
 
-    private User getUserFromResulSet(ResultSet resultSet) throws SQLException {
-        return User.builder()
+    private boolean userTableExists(Connection connection, String tableName) throws SQLException {
+        DatabaseMetaData metaData = connection.getMetaData();
+        ResultSet resultSet = metaData.getTables(null, null, tableName, null);
+        return resultSet.next();
+    }
+
+    private void createUsersTable(Connection connection) throws SQLException {
+        String createTableSQL = "CREATE TABLE users (" +
+                "id INT AUTO_INCREMENT PRIMARY KEY," +
+                "name VARCHAR(255) NOT NULL," +
+                "last_name VARCHAR(255) NOT NULL," +
+                "email VARCHAR(255) NOT NULL," +
+                "password VARCHAR(255) NOT NULL," +
+                "user_role VARCHAR(255) NOT NULL" +
+                ")";
+        try (Statement statement = connection.createStatement()) {
+            statement.executeUpdate(createTableSQL);
+        }
+    }
+
+    private Users getUserFromResulSet(ResultSet resultSet) throws SQLException {
+        return Users.builder()
                 .id(resultSet.getInt("id"))
                 .name(resultSet.getString("name"))
                 .lastName(resultSet.getString("last_name"))
