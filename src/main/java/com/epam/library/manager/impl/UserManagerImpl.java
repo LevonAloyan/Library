@@ -2,9 +2,10 @@ package com.epam.library.manager.impl;
 
 import com.epam.library.db.DBConnectionProvider;
 import com.epam.library.manager.UserManager;
-import com.epam.library.model.Book;
 import com.epam.library.model.User;
 import com.epam.library.model.UserRole;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,15 +14,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service(value = "UserManager")
 public class UserManagerImpl implements UserManager<Integer, User> {
 
     private Connection connection;
 
+    @Autowired
+    private DBConnectionProvider dbConnectionProvider;
 
     @Override
     public User getById(Integer id) {
-        connection = DBConnectionProvider.getInstance().getConnection();
         try {
+            connection = DBConnectionProvider.getInstance().getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM users where id=?");
             preparedStatement.setInt(1, id);
 
@@ -58,7 +62,7 @@ public class UserManagerImpl implements UserManager<Integer, User> {
                 user.setLastName(resultSet.getString("last_name"));
                 user.setEmail(resultSet.getString("email"));
                 user.setPassword(resultSet.getString("password"));
-                user.setUserRole( UserRole.valueOf(resultSet.getString("user_role")));
+                user.setUserRole(UserRole.valueOf(resultSet.getString("user_role")));
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -71,11 +75,13 @@ public class UserManagerImpl implements UserManager<Integer, User> {
     public void save(User user) {
         connection = DBConnectionProvider.getInstance().getConnection();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users(name, last_name, email, password) VALUES(?,?,?,?)");
+            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO users(name, last_name, email, password,user_role) VALUES(?,?,?,?,?)");
+
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setString(5, user.getUserRole().name());
             int execute = preparedStatement.executeUpdate();
             System.out.println(execute);
         } catch (SQLException e) {

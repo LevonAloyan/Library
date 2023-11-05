@@ -1,41 +1,30 @@
 package com.epam.library.db;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import org.springframework.stereotype.Component;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
+import java.sql.Statement;
 
+@Component
 public class DBConnectionProvider {
 
-    private String dbUrl;
-    private String username;
-    private String password;
-    private String dbDriverName;
-
-    public static Connection connection;
     private volatile static DBConnectionProvider instance;
+    public static Connection connection;
+
+    private final String dbDriverName = "org.h2.Driver";
+    private final String dbUrl = "jdbc:h2:mem:library";
+    private final String username = "sa";
+    private final String password = "sa";
+
 
     private DBConnectionProvider() {
         try {
-            loadProperties();
             Class.forName(dbDriverName);
-        } catch (ClassNotFoundException | IOException e) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-    private void loadProperties() throws IOException {
-        Properties properties = new Properties();
-        properties.load(new FileInputStream("/Users/Levon_Aloyan/IdeaProjects/Library/src/main/resources/db-config.properites"));
-
-        dbUrl = properties.getProperty("db.source.url");
-        username = properties.getProperty("db.source.username");
-        password = properties.getProperty("db.source.password");
-        dbDriverName = properties.getProperty("db.source.driverClass");
-
     }
 
     public static DBConnectionProvider getInstance() {
@@ -47,17 +36,51 @@ public class DBConnectionProvider {
             }
         }
         return instance;
-
     }
 
     public Connection getConnection() {
         try {
             if (connection == null || connection.isClosed()) {
                 connection = DriverManager.getConnection(dbUrl, username, password);
+                createUsersTable();
+                createBooksTable();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return connection;
+    }
+
+    private void createUsersTable() {
+        try {
+            Statement statement = connection.createStatement();
+            String createUsersTableQuery = "CREATE TABLE IF NOT EXISTS users (\n" +
+                    "    id INT AUTO_INCREMENT PRIMARY KEY,\n" +
+                    "    name VARCHAR(50),\n" +
+                    "    last_name VARCHAR(50),\n" +
+                    "    email VARCHAR(50),\n" +
+                    "    password VARCHAR(50),\n" +
+                    "    user_role ENUM('ADMIN','USER')\n" +
+                    ");";
+            statement.execute(createUsersTableQuery);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void createBooksTable() {
+        try {
+            Statement statement = connection.createStatement();
+            String createBooksTableQuery = "CREATE TABLE IF NOT EXISTS books (\n" +
+                    "    id INT auto_increment PRIMARY KEY,\n" +
+                    "    book_name VARCHAR(50),\n" +
+                    "    author_name VARCHAR(50),\n" +
+                    "    user_id INT,\n" +
+                    "    FOREIGN KEY (user_id) REFERENCES users(id)\n" +
+                    ");";
+            statement.execute(createBooksTableQuery);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

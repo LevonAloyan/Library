@@ -3,6 +3,8 @@ package com.epam.library.manager.impl;
 import com.epam.library.db.DBConnectionProvider;
 import com.epam.library.manager.BookManager;
 import com.epam.library.model.Book;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,9 +13,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service(value = "BookManager")
 public class BookManagerImpl implements BookManager<Integer, Book> {
 
     private Connection connection;
+    @Autowired
+    private DBConnectionProvider dbConnectionProvider;
 
     @Override
     public Book getById(Integer id) {
@@ -82,9 +87,7 @@ public class BookManagerImpl implements BookManager<Integer, Book> {
         if (book != null) {
             connection = DBConnectionProvider.getInstance().getConnection();
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement(
-                        "UPDATE books SET book_name=?, author_name=?, user_id=? WHERE id=?"
-                );
+                PreparedStatement preparedStatement = connection.prepareStatement("UPDATE books SET book_name=?, author_name=?, user_id=? WHERE id=?");
                 preparedStatement.setString(1, book.getBookName());
                 preparedStatement.setString(2, book.getAuthorName());
                 preparedStatement.setInt(3, book.getUserId());
