@@ -32,13 +32,23 @@ public class DBConnectionProvider {
 
     private void loadProperties() throws IOException {
         Properties properties = new Properties();
-        properties.load(new FileInputStream("/Users/armis/IdeaProjects/Library/src/main/resources/db-config.properites"));
-        dbUrl = properties.getProperty("db.source.url");
-        username = properties.getProperty("db.source.username");
-        password = properties.getProperty("db.source.password");
-        dbDriverName = properties.getProperty("db.source.driverClass");
+        properties.load(new FileInputStream("/Users/armis/IdeaProjects/Library/src/main/resources/application.properties"));
+        dbUrl = properties.getProperty("spring.datasource.url");
+        username = properties.getProperty("spring.datasource.username");
+        password = properties.getProperty("spring.datasource.password");
+        dbDriverName = properties.getProperty("spring.datasource.driverClassName");
 
     }
+
+//    private void loadProperties() throws IOException {
+//        Properties properties = new Properties();
+//        properties.load(new FileInputStream("/Users/armis/IdeaProjects/Library/src/main/resources/db-config.properites"));
+//        dbUrl = properties.getProperty("db.source.url");
+//        username = properties.getProperty("db.source.username");
+//        password = properties.getProperty("db.source.password");
+//        dbDriverName = properties.getProperty("db.source.driverClass");
+//
+//    }
 
 //    public static DBConnectionProvider getInstance() {
 //        if (instance == null) {
