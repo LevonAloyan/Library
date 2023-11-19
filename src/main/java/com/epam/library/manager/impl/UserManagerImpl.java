@@ -2,8 +2,8 @@ package com.epam.library.manager.impl;
 
 import com.epam.library.db.DBProvider;
 import com.epam.library.manager.UserManager;
+import com.epam.library.model.User;
 import com.epam.library.model.UserRole;
-import com.epam.library.model.Users;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Component("userManager")
-public class UserManagerImpl implements UserManager<Integer, Users> {
+public class UserManagerImpl implements UserManager<Integer, User> {
 
     private final DBProvider dbProvider;
 
@@ -20,7 +20,7 @@ public class UserManagerImpl implements UserManager<Integer, Users> {
     }
 
     @Override
-    public void save(Users user) {
+    public void save(User user) {
         try (Connection connection = dbProvider.dataSource().getConnection()) {
             if (!userTableExists(connection, "users")) {
                 createUsersTable(connection);
@@ -42,9 +42,8 @@ public class UserManagerImpl implements UserManager<Integer, Users> {
     }
 
 
-
     @Override
-    public Users getById(Integer id) {
+    public User getById(Integer id) {
         String sql = "SELECT * FROM users WHERE id = ?";
         try (Connection connection = dbProvider.dataSource().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -61,14 +60,14 @@ public class UserManagerImpl implements UserManager<Integer, Users> {
     }
 
     @Override
-    public List<Users> getAll() {
+    public List<User> getAll() {
         String sql = "SELECT * FROM users";
-        List<Users> users = new LinkedList<>();
+        List<User> users = new LinkedList<>();
         try (Connection connection = dbProvider.dataSource().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql);
              ResultSet resultSet = ps.executeQuery()) {
             while (resultSet.next()) {
-                Users user = getUserFromResulSet(resultSet);
+                User user = getUserFromResulSet(resultSet);
                 if (user != null) {
                     users.add(user);
                 }
@@ -81,7 +80,7 @@ public class UserManagerImpl implements UserManager<Integer, Users> {
 
 
     @Override
-    public void update(Users user) {
+    public void update(User user) {
         String sql = "Update users set name = ?,last_name = ?,email = ? WHERE id = ?";
         try {
             Connection connection = dbProvider.dataSource().getConnection();
@@ -111,7 +110,7 @@ public class UserManagerImpl implements UserManager<Integer, Users> {
     }
 
     @Override
-    public Users getByEmailAndPassword(String email, String password) {
+    public User getByEmailAndPassword(String email, String password) {
         try {
             Connection connection = dbProvider.dataSource().getConnection();
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM users where email=? and password=?");
@@ -128,7 +127,7 @@ public class UserManagerImpl implements UserManager<Integer, Users> {
     }
 
     @Override
-    public Users getByEmail(String email) {
+    public User getByEmail(String email) {
         String sql = "SELECT * FROM users WHERE email = ?";
         try {
             Connection connection = dbProvider.dataSource().getConnection();
@@ -178,8 +177,8 @@ public class UserManagerImpl implements UserManager<Integer, Users> {
         }
     }
 
-    private Users getUserFromResulSet(ResultSet resultSet) throws SQLException {
-        return Users.builder()
+    private User getUserFromResulSet(ResultSet resultSet) throws SQLException {
+        return User.builder()
                 .id(resultSet.getInt("id"))
                 .name(resultSet.getString("name"))
                 .lastName(resultSet.getString("last_name"))

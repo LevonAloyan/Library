@@ -1,0 +1,29 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admins dashboard</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="wrapper">
+  <form th:action="@{/books/edit}" method="post">
+    <div class="input-box">
+      <input name="bookName" type="text" placeholder="Enter book's name" required>
+    </div>
+    <div class="input-box">
+      <input name="authorName" type="text" placeholder="Enter book's author name" required>
+    </div>
+    <br>
+    <div class="input-box button">
+      <input type="submit" value="Edit">
+    </div>
+  </form>
+  <div class="webcolor-field">
+    <p><a href="/assign">Assign book to user</a></p>
+    <p><a href="/books/add}">Add  a book</a></p>
+    <p><a href="/">Back</a></p><br>
+  </div>
+</div>
+</body>
+</html>

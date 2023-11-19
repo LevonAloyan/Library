@@ -1,0 +1,35 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User's dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <h2>Welcome <span th:text="${session.user.name}"></span></h2>
+</head>
+<body>
+<div class="wrapper">
+    <form th:action="@{/my-account/user}" method="get">
+        <!-- Display the list of books -->
+        <h3>Books:</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${userAllBooks}">
+                <td th:text="${book.bookName}"></td>
+                <td th:text="${book.authorName}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <div class="web-field">
+        <a href="/">Back</a><br>
+    </div>
+</div>
+</body>
+</html>
+

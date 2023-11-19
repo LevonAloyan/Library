@@ -1,0 +1,51 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Assign book to user</title>
+        <div th:with="users=${session.users}">
+        </div>
+        <div th:with="unassignedBooks=${session.unassignedBooks}">
+        </div>
+
+
+        <link rel="stylesheet" href="css/style.css">
+        <h2>Admin</h2>
+    </head>
+<body>
+<div class="wrapper">
+    <form th:action="@{/assign}" method="post">
+        <div th:if="${#strings.isNotEmpty(successAssign)}">
+            <span style="color: green" th:text="${successAssign}"></span>
+        </div>
+        <div class="input-box">
+            <label for="selectuser"> Select User:
+                <select name="selectedUser" id="selectuser">
+                    <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.name} ${user.lastName}"></option>
+                </select>
+            </label>
+        </div>
+
+        <br>
+        <div class="input-box">
+            <label for="selectbook"> Select Book:
+                <select name="selectedBook" id="selectbook">
+                    <option th:each="book : ${session.unassignedBooks}" th:value="${book.id}" th:text="${book.bookName} ${book.authorName}"></option>
+                </select>
+            </label>
+        </div>
+
+        <br>
+        <div class="input-box button">
+            <input type="submit" value="Assign">
+        </div>
+    </form>
+
+    <ul>
+        <li><a href="/">Back</a></li>
+        <li><a href="/users/all">Show all users</a></li>
+        <li><a href="/books/all">Show all books</a></li>
+    </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" dir="ltr">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admins dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <h2> Welcome <span th:text="${session.user.name}"></span></h2>
+</head>
+<body>
+<div class="wrapper">
+    <form action="/books/add" method="post">
+        <div th:if="${#strings.isNotEmpty(bookAddingMsg)}">
+            <span style="color: green" th:text="${bookAddingMsg}"></span>
+        </div>
+        <div class="input-box">
+            <input name="bookName" type="text" placeholder="Enter book's name" required>
+        </div>
+        <div class="input-box">
+            <input name="authorName" type="text" placeholder="Enter book's author name" required>
+        </div>
+        <br>
+        <div class="input-box button">
+            <input type="submit" value="Add">
+        </div>
+    </form>
+    <div class="webcolor-field">
+        <p><a href=/users/all>Show all users</a></p>
+        <p><a href="/books/all">Show all books</a></p>
+        <p><a href="/assign">Assign book to user</a></p>
+        <p><a href="/">Back</a></p><br>
+    </div>
+</div>
+</body>
+</html>

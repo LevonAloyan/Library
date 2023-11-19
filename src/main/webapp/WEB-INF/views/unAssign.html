@@ -1,0 +1,45 @@
+
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Assign book to user</title>
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
+<body>
+<div class="wrapper">
+    <th:block th:if="${not #strings.isEmpty(request.successUnAssign)}">
+        <span style="color: green" th:text="${request.successUnAssign}"></span>
+    </th:block>
+    <form th:action="@{/book/unassigned}" method="post">
+        <div class="wrapper">
+            <table>
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>User_ID</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book : ${assignedBooks}">
+                    <td th:text="${book.bookName}"></td>
+                    <td th:text="${book.authorName}"></td>
+                    <td th:text="${book.userId}"></td>
+                    <td>
+                        <input type="hidden" name="bookId" th:value="${book.id}">
+                        <input type="submit" value="Unassign" class="input-box button">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+    <ul>
+        <li><a th:href="@{/}">Back</a></li>
+        <li><a th:href="@{/users}">Show all users</a></li>
+        <li><a th:href="@{/books}">Show all books</a></li>
+    </ul>
+</div>
+</body>
+</html>

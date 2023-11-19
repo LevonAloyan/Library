@@ -4,56 +4,33 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
-    <welcome-file-list>
-        <welcome-file>/WEB-INF/login.jsp</welcome-file>
-    </welcome-file-list>
 
     <servlet>
-        <servlet-name>registerPage</servlet-name>
-        <jsp-file>/WEB-INF/register.jsp</jsp-file>
+        <servlet-name>requestDispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/applicationContextMVC.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
     </servlet>
+
     <servlet-mapping>
-        <servlet-name>registerPage</servlet-name>
-        <url-pattern>/registerPage</url-pattern>
+        <servlet-name>requestDispatcher</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-
-    <servlet>
-        <servlet-name>unAssign</servlet-name>
-        <jsp-file>/WEB-INF/unAssign.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>unAssign</servlet-name>
-        <url-pattern>/unassigned</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>dashboard</servlet-name>
-        <jsp-file>/WEB-INF/userDashboard.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>dashboard</servlet-name>
-        <url-pattern>/dashboard</url-pattern>
-    </servlet-mapping>
-
-
-    <servlet>
-        <servlet-name>error403</servlet-name>
-        <jsp-file>/WEB-INF/error_403.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>error403</servlet-name>
-        <url-pattern>/error_403</url-pattern>
-    </servlet-mapping>
-
-
-<!--        <error-page>-->
-<!--            <location>/WEB-INF/error_404.jsp</location>-->
-<!--            <error-code>404</error-code>-->
-<!--        </error-page>-->
-<!--        <error-page>-->
-<!--            <location></location>-->
-<!--        </error-page>-->
+<!--    <filter>-->
+<!--        <filter-name>springSecurityFilterChain</filter-name>-->
+<!--        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
+<!--        <init-param>-->
+<!--            <param-name>targetClass</param-name>-->
+<!--            <param-value>org.springframework.security.web.FilterChainProxy</param-value>-->
+<!--        </init-param>-->
+<!--    </filter>-->
+<!--    <filter-mapping>-->
+<!--        <filter-name>springSecurityFilterChain</filter-name>-->
+<!--        <url-pattern>/*</url-pattern>-->
+<!--    </filter-mapping>-->
 
 </web-app>

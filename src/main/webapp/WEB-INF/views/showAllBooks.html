@@ -1,0 +1,38 @@
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View all books</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="wrapper">
+    <form th:action="@{/books/all}" method="post" class="tree-table-view">
+        <!-- Display the list of books -->
+        <h3>Books:</h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book : ${books}">
+                <td th:text="${book.bookName}"></td>
+                <td>
+                    <span th:text="${book.authorName}"></span>
+                    <a th:href="@{/books/edit(bookId=${book.id})}">Edit</a> |
+                    <a th:href="@{/books/remove(bookId=${book.id})}">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="web-field">
+            <a href="/my-account">Back</a><br>
+            <a href="/assign">Assign book to user</a><br>
+            <a href="/books/unassigned">Unassign book</a><br>
+        </div>
+    </form>
+</div>
+</body>
+</html>

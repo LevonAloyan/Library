@@ -2,7 +2,7 @@ package com.epam.library.manager.impl;
 
 import com.epam.library.db.DBProvider;
 import com.epam.library.manager.BookManager;
-import com.epam.library.model.Books;
+import com.epam.library.model.Book;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Component("bookManager")
-public class BookManagerImpl implements BookManager<Integer, Books> {
+public class BookManagerImpl implements BookManager<Integer, Book> {
 
     private final DBProvider dbProvider;
 
@@ -21,7 +21,7 @@ public class BookManagerImpl implements BookManager<Integer, Books> {
 
 
     @Override
-    public Books getById(Integer id) {
+    public Book getById(Integer id) {
         String sql = "SELECT * FROM books  WHERE id = " + id;
         try (Connection connection = dbProvider.dataSource().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -37,14 +37,14 @@ public class BookManagerImpl implements BookManager<Integer, Books> {
 
 
     @Override
-    public List<Books> getAll() {
+    public List<Book> getAll() {
         String sql = "SELECT * FROM books";
-        List<Books> books = new LinkedList<>();
+        List<Book> books = new LinkedList<>();
         try (Connection connection = dbProvider.dataSource().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
-                Books book = getBooksFromResulSet(resultSet);
+                Book book = getBooksFromResulSet(resultSet);
                 if (book != null) {
                     books.add(book);
                 }
@@ -57,7 +57,7 @@ public class BookManagerImpl implements BookManager<Integer, Books> {
     }
 
     @Override
-    public void save(Books book) {
+    public void save(Book book) {
         try (Connection connection = dbProvider.dataSource().getConnection()) {
             if (!bookTableExists(connection, "books")) {
                 createBooksTable(connection);
@@ -79,7 +79,7 @@ public class BookManagerImpl implements BookManager<Integer, Books> {
 
 
     @Override
-    public void update(Books book) {
+    public void update(Book book) {
         if (book != null) {
             try {
                 try (Connection connection = dbProvider.dataSource().getConnection()) {
@@ -113,14 +113,14 @@ public class BookManagerImpl implements BookManager<Integer, Books> {
 
 
     @Override
-    public List<Books> getAllUnassignedBooks() {
-        List<Books> books = new ArrayList<>();
+    public List<Book> getAllUnassignedBooks() {
+        List<Book> books = new ArrayList<>();
         try (Connection connection = dbProvider.dataSource().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM books where user_id is null");
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Books book = new Books();
+                Book book = new Book();
                 book.setId(resultSet.getInt("id"));
                 book.setBookName(resultSet.getString("book_name"));
                 book.setAuthorName(resultSet.getString("author_name"));
@@ -135,8 +135,8 @@ public class BookManagerImpl implements BookManager<Integer, Books> {
     }
 
     @Override
-    public List<Books> getAllAssignedBooks() {
-        List<Books> books = new ArrayList<>();
+    public List<Book> getAllAssignedBooks() {
+        List<Book> books = new ArrayList<>();
         try (Connection connection = dbProvider.dataSource().getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM books where user_id is not null");
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -164,7 +164,7 @@ public class BookManagerImpl implements BookManager<Integer, Books> {
     }
 
     @Override
-    public void unAssign(Books book) {
+    public void unAssign(Book book) {
         String sql = "UPDATE books SET user_id = NULL WHERE id = ?";
         try (Connection connection = dbProvider.dataSource().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -176,7 +176,7 @@ public class BookManagerImpl implements BookManager<Integer, Books> {
     }
 
     @Override
-    public Books getByUserId(Integer userId) {
+    public Book getByUserId(Integer userId) {
         String sql = "SELECT * FROM books  WHERE user_id = " + userId;
         try (Connection connection = dbProvider.dataSource().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -192,9 +192,9 @@ public class BookManagerImpl implements BookManager<Integer, Books> {
 
 
     @Override
-    public List<Books> getUserAllBooks(Integer userId) {
+    public List<Book> getUserAllBooks(Integer userId) {
         String sql = "SELECT book_name, author_name FROM books WHERE user_id = ?";
-        List<Books> books = new LinkedList<>();
+        List<Book> books = new LinkedList<>();
         try (Connection connection = dbProvider.dataSource().getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, userId);
@@ -230,8 +230,8 @@ public class BookManagerImpl implements BookManager<Integer, Books> {
     }
 
 
-    private Books getBooksFromResulSet(ResultSet resultSet) throws SQLException {
-        return Books.builder()
+    private Book getBooksFromResulSet(ResultSet resultSet) throws SQLException {
+        return Book.builder()
                 .id(resultSet.getInt("id"))
                 .bookName(resultSet.getString("book_name"))
                 .authorName(resultSet.getString("author_name"))
