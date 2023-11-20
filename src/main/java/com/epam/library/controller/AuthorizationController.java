@@ -6,6 +6,7 @@ import com.epam.library.model.UserRole;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -17,10 +18,9 @@ public class AuthorizationController {
 
 
     @GetMapping
-    public String redirectToDashboard(HttpServletRequest request, Model model) {
-        User user = (User) request.getSession().getAttribute("user");
-
+    public String redirectToDashboard(@ModelAttribute("user") User user,HttpServletRequest request) {
         if (user != null) {
+            request.getSession().setAttribute("user", user);
             if (user.getUserRole().equals(UserRole.USER)) {
                 return "redirect:/userPage";
             } else if (user.getUserRole().equals(UserRole.ADMIN)) {

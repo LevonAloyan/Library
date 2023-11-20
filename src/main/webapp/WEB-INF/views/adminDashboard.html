@@ -3,12 +3,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admins dashboard</title>
     <link rel="stylesheet" href="/css/style.css">
-    <h2> Welcome <span th:text="${session.user.name}"></span></h2>
+    <!--    <h2> Welcome <span th:text="${user.name}"></span></h2>-->
 </head>
 <body>
 <div class="wrapper">
-    <form action="/books/add" method="post">
-        <div th:if="${#strings.isNotEmpty(bookAddingMsg)}">
+    <form th:object="${user}" action="/books/add" method="post">
+        <div th:if="${bookAddingMsg != null}">
             <span style="color: green" th:text="${bookAddingMsg}"></span>
         </div>
         <div class="input-box">

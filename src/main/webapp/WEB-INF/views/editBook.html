@@ -9,6 +9,8 @@
 <div class="wrapper">
   <form th:action="@{/books/edit}" method="post">
     <div class="input-box">
+      <input type="hidden" name="bookId" th:value="${book.id}">
+    <div class="input-box">
       <input name="bookName" type="text" placeholder="Enter book's name" required>
     </div>
     <div class="input-box">
@@ -21,7 +23,7 @@
   </form>
   <div class="webcolor-field">
     <p><a href="/assign">Assign book to user</a></p>
-    <p><a href="/books/add}">Add  a book</a></p>
+    <p><a href="/books/add">Add  a book</a></p>
     <p><a href="/">Back</a></p><br>
   </div>
 </div>

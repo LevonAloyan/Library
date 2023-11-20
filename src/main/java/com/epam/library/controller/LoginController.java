@@ -4,9 +4,7 @@ import com.epam.library.manager.impl.UserManagerImpl;
 import com.epam.library.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/")
@@ -24,9 +22,9 @@ public class LoginController {
     }
 
     @PostMapping
-    protected String processLogin(Model model, String email, String password) {
-        User user = userManager.getByEmailAndPassword(email, password);
+    protected String processLogin(@ModelAttribute("user") User user, Model model) {
         if (user != null) {
+            user = userManager.getByEmailAndPassword(user.getEmail(), user.getPassword());
             model.addAttribute("user", user);
             return "redirect:/my-account/adminPage";
         } else {

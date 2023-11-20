@@ -64,17 +64,17 @@ public class BookController {
         return "adminDashboard";
     }
 
-//    @PostMapping("/edit")
-//    public String editBook(@RequestParam("bookId") int bookId,
-//                           @RequestParam("bookName") String bookName,
-//                           @RequestParam("authorName") String authorName) {
-//        Book book = Book.builder()
-//                .id(bookId)
-//                .bookName(bookName)
-//                .authorName(authorName)
-//                .build();
-//        bookManager.update(book);
-//        return "redirect:/books";
-//    }
+    @PostMapping("/edit")
+    public String editBook(@RequestParam("bookId") int bookId,
+                           @RequestParam("bookName") String bookName,
+                           @RequestParam("authorName") String authorName) {
+        Book book = Book.builder()
+                .id(bookId)
+                .bookName(bookName)
+                .authorName(authorName)
+                .build();
+        bookManager.update(book);
+        return "redirect:/books";
+    }
 
 }
